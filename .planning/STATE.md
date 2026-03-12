@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: planning
-stopped_at: Completed 01-foundation/01-03-PLAN.md
-last_updated: "2026-03-12T09:28:41.079Z"
+stopped_at: Completed 01-foundation/01-04-PLAN.md
+last_updated: "2026-03-12T09:35:04.090Z"
 last_activity: 2026-03-12 — Roadmap created
 progress:
   total_phases: 3
   completed_phases: 0
   total_plans: 6
-  completed_plans: 3
+  completed_plans: 4
   percent: 0
 ---
 
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-03-12)
 ## Current Position
 
 Phase: 1 of 3 (Foundation)
-Plan: 0 of TBD in current phase
-Status: Ready to plan
-Last activity: 2026-03-12 — Roadmap created
+Plan: 4 of 6 in current phase
+Status: In Progress
+Last activity: 2026-03-12 — Completed 01-04 article generation pipeline
 
-Progress: [░░░░░░░░░░] 0%
+Progress: [███████░░░] 67%
 
 ## Performance Metrics
 
@@ -53,6 +53,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 01-foundation P01 | 6 | 2 tasks | 17 files |
 | Phase 01-foundation P02 | 3min | 2 tasks | 9 files |
 | Phase 01-foundation P03 | 10min | 2 tasks | 10 files |
+| Phase 01-foundation P04 | 2min | 2 tasks | 6 files |
 
 ## Accumulated Context
 
@@ -74,6 +75,9 @@ Recent decisions affecting current work:
 - [Phase 01-foundation]: parseGA4CSV scans raw lines for header row before PapaParse — handles any number of GA4 metadata rows
 - [Phase 01-foundation]: PerformancePageClient wraps upload+table as Client Component calling router.refresh() — keeps performance page as Server Component while enabling live refresh
 - [Phase 01-foundation]: savePerformanceData uses DELETE-then-INSERT for re-upload replace semantics (no upsert complexity)
+- [Phase 01-foundation]: Introduction and conclusion generated last — body sections passed as context so they accurately reflect what was written, not just the outline plan
+- [Phase 01-foundation]: generateObject with Zod schema (ArticleOutlineSchema) for structured outline — prevents malformed shapes reaching downstream section generation
+- [Phase 01-foundation]: maxDuration = 60 on both generation routes — Vercel default 10s timeout silently kills streaming with no error surfaced to user
 
 ### Pending Todos
 
@@ -87,6 +91,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-12T09:28:41.077Z
-Stopped at: Completed 01-foundation/01-03-PLAN.md
+Last session: 2026-03-12T09:35:04.089Z
+Stopped at: Completed 01-foundation/01-04-PLAN.md
 Resume file: None
