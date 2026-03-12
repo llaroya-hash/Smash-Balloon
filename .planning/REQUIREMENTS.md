@@ -76,6 +76,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 | BRAND-01 | Phase 1 | Pending |
 | BRAND-02 | Phase 1 | Pending |
 | BRAND-03 | Phase 1 | Pending |
+| PERF-01 | Phase 1 | Pending |
+| PERF-02 | Phase 1 | Pending |
+| PERF-03 | Phase 1 | Pending |
 | ARTICLE-01 | Phase 1 | Pending |
 | ARTICLE-02 | Phase 1 | Pending |
 | ARTICLE-03 | Phase 1 | Pending |
@@ -87,10 +90,6 @@ Which phases cover which requirements. Updated during roadmap creation.
 | CAL-01 | Phase 3 | Pending |
 | CAL-02 | Phase 3 | Pending |
 
-| PERF-01 | Phase 1 | Pending |
-| PERF-02 | Phase 1 | Pending |
-| PERF-03 | Phase 1 | Pending |
-
 **Coverage:**
 - v1 requirements: 16 total
 - Mapped to phases: 16
@@ -98,4 +97,4 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 ---
 *Requirements defined: 2026-03-12*
-*Last updated: 2026-03-12 after initial definition*
+*Last updated: 2026-03-12 after roadmap creation*
