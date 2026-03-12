@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:smashballoon.com)",
+      "WebFetch(domain:wpchat.com)",
+      "Bash(node \"$HOME/.claude/get-shit-done/bin/gsd-tools.cjs\" commit \"docs: initialize project\" --files .planning/PROJECT.md)",
+      "Bash(node \"$HOME/.claude/get-shit-done/bin/gsd-tools.cjs\" commit \"chore: add project config\" --files .planning/config.json)",
+      "Bash(node \"$HOME/.claude/get-shit-done/bin/gsd-tools.cjs\" commit \"docs: complete project research\" --files .planning/research/)",
+      "Bash(node \"$HOME/.claude/get-shit-done/bin/gsd-tools.cjs\" commit \"docs: define v1 requirements\" --files .planning/REQUIREMENTS.md)",
+      "Bash(node \"$HOME/.claude/get-shit-done/bin/gsd-tools.cjs\" commit \"docs: add Google Analytics performance data requirements\" --files .planning/REQUIREMENTS.md)",
+      "Bash(node \"$HOME/.claude/get-shit-done/bin/gsd-tools.cjs\" commit \"docs: create roadmap \\(3 phases\\)\" --files .planning/ROADMAP.md .planning/STATE.md .planning/REQUIREMENTS.md)",
+      "Skill(gsd:plan-phase)",
+      "Bash(node \"$HOME/.claude/get-shit-done/bin/gsd-tools.cjs\" commit \"docs\\(01\\): capture phase context\" --files \".planning/phases/01-foundation/01-CONTEXT.md\" 2>&1)",
+      "Bash(node \"$HOME/.claude/get-shit-done/bin/gsd-tools.cjs\" state record-session \\\\\n  --stopped-at \"Phase 1 context gathered\" \\\\\n  --resume-file \".planning/phases/01-foundation/01-CONTEXT.md\" 2>&1\nnode \"$HOME/.claude/get-shit-done/bin/gsd-tools.cjs\" commit \"docs\\(state\\): record phase 1 context session\" --files \".planning/STATE.md\" 2>&1)",
+      "WebSearch",
+      "Bash(grep -l \"## Validation Architecture\" \".planning/phases/01-foundation/\"*-RESEARCH.md 2>/dev/null)",
+      "Bash(node \"$HOME/.claude/get-shit-done/bin/gsd-tools.cjs\" commit \"docs\\(01\\): add validation strategy\" --files \".planning/phases/01-foundation/01-VALIDATION.md\" 2>/dev/null; echo \"done\")",
+      "Bash(node \"$HOME/.claude/get-shit-done/bin/gsd-tools.cjs\" init plan-phase \"01-foundation\" 2>/dev/null | head -5 || echo \"gsd-tools not available\")",
+      "Bash(node \"$HOME/.claude/get-shit-done/bin/gsd-tools.cjs\" init plan-phase \"01-foundation\" 2>&1 | head -20)",
+      "Bash(node \"/Users/liannelaroya/.claude/get-shit-done/bin/gsd-tools.cjs\" init plan-phase \"01-foundation\" 2>&1 | head -20)",
+      "Bash(node \"/Users/liannelaroya/.claude/get-shit-done/bin/gsd-tools.cjs\" verify plan-structure \"/Users/liannelaroya/Desktop/work/.planning/phases/01-foundation/01-06-PLAN.md\" 2>&1)",
+      "Bash(git init:*)",
+      "Bash(git commit:*)",
+      "Skill(gsd:execute-phase)"
+    ]
+  }
+}
