@@ -13,6 +13,9 @@ export default function DashboardLayout({
           <a href="/brand" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
             Brand
           </a>
+          <a href="/performance" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+            Performance
+          </a>
         </div>
       </nav>
       <main>{children}</main>
