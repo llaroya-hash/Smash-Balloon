@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: planning
-stopped_at: Phase 1 context gathered
-last_updated: "2026-03-12T08:14:10.847Z"
+stopped_at: Completed 01-foundation/01-01-PLAN.md
+last_updated: "2026-03-12T08:49:19.123Z"
 last_activity: 2026-03-12 — Roadmap created
 progress:
   total_phases: 3
   completed_phases: 0
-  total_plans: 0
-  completed_plans: 0
+  total_plans: 6
+  completed_plans: 1
   percent: 0
 ---
 
@@ -50,6 +50,7 @@ Progress: [░░░░░░░░░░] 0%
 - Trend: -
 
 *Updated after each plan completion*
+| Phase 01-foundation P01 | 6 | 2 tasks | 17 files |
 
 ## Accumulated Context
 
@@ -62,6 +63,9 @@ Recent decisions affecting current work:
 - [Init]: Brand voice via form (not URL scraping) — user controls what the tool learns
 - [Research]: Multi-step article generation pipeline (outline → sections → assembly) — prevents LLM context degradation past 800 words
 - [Research]: Schema anticipates multi-brand from Phase 1 — brand_id FK on all tables so Phase 5 (WPChat) is additive
+- [Phase 01-foundation]: jsdom required as explicit dev dependency in vitest v4 for jsdom environment
+- [Phase 01-foundation]: tsconfig paths updated to include src/ — allows @/lib and @/types imports from src/ alongside root app/ structure
+- [Phase 01-foundation]: Wave 0 test stubs pattern established — it.todo keeps suite green before implementations exist
 
 ### Pending Todos
 
@@ -75,6 +79,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-12T08:14:10.845Z
-Stopped at: Phase 1 context gathered
-Resume file: .planning/phases/01-foundation/01-CONTEXT.md
+Last session: 2026-03-12T08:49:19.121Z
+Stopped at: Completed 01-foundation/01-01-PLAN.md
+Resume file: None
