@@ -28,7 +28,15 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. User enters a topic manually and generates a full article draft including title, H2/H3 structure, body sections, conclusion, and a plugin CTA — without needing to provide any other inputs
   4. Generated article matches Smash Balloon's brand voice: practical how-to format, numbered steps, "proven" framing, conversational but professional tone, and plugin use-case tie-in
   5. Generated article includes a target keyword, meta description, and semantic H2/H3 coverage — and does not keyword-stuff
-**Plans**: TBD
+**Plans**: 6 plans
+
+Plans:
+- [ ] 01-01-PLAN.md — App bootstrap, DB schema (brands/performanceData/articleDrafts), shared types, Wave 0 test stubs
+- [ ] 01-02-PLAN.md — Brand voice wizard (4-step UI), compileBrandContextBlock, Server Actions, unit tests
+- [ ] 01-03-PLAN.md — GA4 CSV upload, parseGA4CSV, classifyFormatType, performance table, unit tests
+- [ ] 01-04-PLAN.md — Article generation pipeline (outline route, section streaming route, draft lifecycle)
+- [ ] 01-05-PLAN.md — Article generation UI (streaming display, format picker, drafts list, dashboard nav)
+- [ ] 01-06-PLAN.md — Human verify: end-to-end pipeline quality check
 
 ### Phase 2: Competitor Intelligence + Topic Ideation
 **Goal**: The tool automatically discovers relevant WordPress plugin competitors from the brand's niche and keywords, analyzes the SERP for any entered keyword, identifies content gaps, and produces a scored list of topic ideas — so the content manager never starts from a blank page
@@ -58,6 +66,6 @@ Phases execute in numeric order: 1 → 2 → 3
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation | 0/TBD | Not started | - |
+| 1. Foundation | 0/6 | Not started | - |
 | 2. Competitor Intelligence + Topic Ideation | 0/TBD | Not started | - |
 | 3. Publishing Calendar | 0/TBD | Not started | - |
