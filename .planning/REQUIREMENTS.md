@@ -11,6 +11,12 @@
 - [ ] **BRAND-02**: User can paste 1-2 example articles so the AI learns the actual writing structure and style
 - [ ] **BRAND-03**: User can fill out a plugin facts sheet (product names, features, pricing, use cases) to prevent AI from hallucinating product details
 
+### Performance Data
+
+- [ ] **PERF-01**: User can upload a Google Analytics CSV export (traffic, bounce rate, sessions, etc.) for existing articles
+- [ ] **PERF-02**: Tool uses top-performing article data to inform topic scoring — surfaces more topics similar to high-traffic articles
+- [ ] **PERF-03**: Tool uses top-performing article data to inform writing style — if long-form how-to guides drive the most traffic, generated articles prioritize that format
+
 ### Competitor Intelligence
 
 - [ ] **COMP-01**: Tool auto-discovers relevant competitors from the brand's niche and target keywords — no manual URL input required
@@ -81,9 +87,13 @@ Which phases cover which requirements. Updated during roadmap creation.
 | CAL-01 | Phase 3 | Pending |
 | CAL-02 | Phase 3 | Pending |
 
+| PERF-01 | Phase 1 | Pending |
+| PERF-02 | Phase 1 | Pending |
+| PERF-03 | Phase 1 | Pending |
+
 **Coverage:**
-- v1 requirements: 13 total
-- Mapped to phases: 13
+- v1 requirements: 16 total
+- Mapped to phases: 16
 - Unmapped: 0 ✓
 
 ---
