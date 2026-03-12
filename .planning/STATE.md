@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: planning
-stopped_at: Completed 01-foundation/01-04-PLAN.md
-last_updated: "2026-03-12T09:35:04.090Z"
-last_activity: 2026-03-12 — Roadmap created
+status: executing
+stopped_at: Completed 01-foundation/01-05-PLAN.md
+last_updated: "2026-03-12T09:44:44.869Z"
+last_activity: 2026-03-12 — Completed 01-04 article generation pipeline
 progress:
   total_phases: 3
   completed_phases: 0
   total_plans: 6
-  completed_plans: 4
-  percent: 0
+  completed_plans: 5
+  percent: 67
 ---
 
 # Project State
@@ -54,6 +54,7 @@ Progress: [███████░░░] 67%
 | Phase 01-foundation P02 | 3min | 2 tasks | 9 files |
 | Phase 01-foundation P03 | 10min | 2 tasks | 10 files |
 | Phase 01-foundation P04 | 2min | 2 tasks | 6 files |
+| Phase 01-foundation P05 | 4min | 2 tasks | 7 files |
 
 ## Accumulated Context
 
@@ -78,6 +79,8 @@ Recent decisions affecting current work:
 - [Phase 01-foundation]: Introduction and conclusion generated last — body sections passed as context so they accurately reflect what was written, not just the outline plan
 - [Phase 01-foundation]: generateObject with Zod schema (ArticleOutlineSchema) for structured outline — prevents malformed shapes reaching downstream section generation
 - [Phase 01-foundation]: maxDuration = 60 on both generation routes — Vercel default 10s timeout silently kills streaming with no error surfaced to user
+- [Phase 01-foundation]: Dashboard layout converted to 'use client' for usePathname active link detection — only nav shell needs client, children remain server components
+- [Phase 01-foundation]: FormatPicker uses '__top__' sentinel value internally for 'use top-performing format' — resolved to actual format string before API calls
 
 ### Pending Todos
 
@@ -91,6 +94,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-12T09:35:04.089Z
-Stopped at: Completed 01-foundation/01-04-PLAN.md
+Last session: 2026-03-12T09:44:44.867Z
+Stopped at: Completed 01-foundation/01-05-PLAN.md
 Resume file: None
