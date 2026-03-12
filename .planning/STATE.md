@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: planning
-stopped_at: Completed 01-foundation/01-01-PLAN.md
-last_updated: "2026-03-12T08:49:19.123Z"
+stopped_at: Completed 01-foundation/01-02-PLAN.md
+last_updated: "2026-03-12T08:56:14.375Z"
 last_activity: 2026-03-12 — Roadmap created
 progress:
   total_phases: 3
   completed_phases: 0
   total_plans: 6
-  completed_plans: 1
+  completed_plans: 2
   percent: 0
 ---
 
@@ -51,6 +51,7 @@ Progress: [░░░░░░░░░░] 0%
 
 *Updated after each plan completion*
 | Phase 01-foundation P01 | 6 | 2 tasks | 17 files |
+| Phase 01-foundation P02 | 3min | 2 tasks | 9 files |
 
 ## Accumulated Context
 
@@ -66,6 +67,9 @@ Recent decisions affecting current work:
 - [Phase 01-foundation]: jsdom required as explicit dev dependency in vitest v4 for jsdom environment
 - [Phase 01-foundation]: tsconfig paths updated to include src/ — allows @/lib and @/types imports from src/ alongside root app/ structure
 - [Phase 01-foundation]: Wave 0 test stubs pattern established — it.todo keeps suite green before implementations exist
+- [Phase 01-foundation]: compileBrandContextBlock places do-not-invent instruction BEFORE plugin facts list — AI sees constraint before facts, not buried after
+- [Phase 01-foundation]: Brand pages created in app/(dashboard)/ not src/app/ — Next.js app dir is at project root
+- [Phase 01-foundation]: FactsSheetForm uses newline-separated textarea strings split on save — simpler UX than dynamic per-feature inputs
 
 ### Pending Todos
 
@@ -79,6 +83,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-12T08:49:19.121Z
-Stopped at: Completed 01-foundation/01-01-PLAN.md
+Last session: 2026-03-12T08:56:14.374Z
+Stopped at: Completed 01-foundation/01-02-PLAN.md
 Resume file: None
