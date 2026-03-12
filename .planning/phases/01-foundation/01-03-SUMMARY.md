@@ -134,3 +134,14 @@ None - no external service configuration required.
 ---
 *Phase: 01-foundation*
 *Completed: 2026-03-12*
+
+## Self-Check: PASSED
+
+- src/lib/csv/parse.ts — FOUND
+- src/lib/csv/classify.ts — FOUND
+- src/actions/performance.ts — FOUND
+- src/components/performance/CSVUpload.tsx — FOUND
+- src/components/performance/PerformanceTable.tsx — FOUND
+- app/(dashboard)/performance/page.tsx — FOUND
+- Commit 8c0c9d1 — FOUND
+- Commit 5dd5a3f — FOUND
