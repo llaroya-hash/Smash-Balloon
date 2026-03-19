@@ -1,5 +1,14 @@
 import { generateObject, streamText } from 'ai'
-import { openai } from '@ai-sdk/openai'
+import { createGroq } from '@ai-sdk/groq'
+
+const groq = createGroq({ apiKey: process.env.GROQ_API_KEY })
+
+// Groq has token limits — cap brand context to avoid exceeding them
+const MAX_CONTEXT_CHARS = 12000
+function trimContext(ctx: string): string {
+  return ctx.length > MAX_CONTEXT_CHARS ? ctx.slice(0, MAX_CONTEXT_CHARS) + '\n[context truncated]' : ctx
+}
+
 import { z } from 'zod'
 import type { ArticleOutline } from '@/types'
 
@@ -45,8 +54,8 @@ Requirements:
 - Target keyword must be extracted from the topic${formatInstruction}`
 
   const result = await generateObject({
-    model: openai('gpt-4o'),
-    system: brandContextBlock,
+    model: groq('moonshotai/kimi-k2-instruct'),
+    system: trimContext(brandContextBlock),
     schema: ArticleOutlineSchema,
     prompt,
   })
@@ -157,8 +166,8 @@ export async function streamSection(
 ): Promise<Response> {
   const prompt = buildSectionPrompt(outline, sectionIndex)
   const result = streamText({
-    model: openai('gpt-4o'),
-    system: brandContextBlock,
+    model: groq('moonshotai/kimi-k2-instruct'),
+    system: trimContext(brandContextBlock),
     prompt,
   })
   return result.toUIMessageStreamResponse()

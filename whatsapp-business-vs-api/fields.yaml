@@ -1,0 +1,123 @@
+fields:
+  core:
+    - name: definition
+      description: Plain-language explanation of what this item is
+      detail_level: brief
+
+    - name: target_audience
+      description: Who it's designed for — business size, technical skill level, use case fit
+      detail_level: brief
+
+    - name: key_features
+      description: Top capabilities relevant to a WordPress site owner, not generic feature lists
+      detail_level: moderate
+
+    - name: limitations
+      description: What you can't do, hard caps, and where it falls short
+      detail_level: moderate
+
+  pricing:
+    - name: pricing
+      description: >
+        Full cost structure — free tiers, per-message rates (by region if relevant),
+        BSP fees, and hidden costs. Note the 2025 shift from conversation-based to
+        per-message billing for the API.
+      detail_level: detailed
+
+    - name: scalability_ceiling
+      description: >
+        The hard limits of this option and what triggers the need to upgrade or switch.
+        App tops at 256 broadcast recipients and single-device; API tiers go to 100K+/day.
+      detail_level: moderate
+
+  setup:
+    - name: setup_complexity
+      description: >
+        How hard to get started on a scale of 1-5 with explanation. Include steps
+        needed for a typical WordPress site owner with no developer background.
+      detail_level: moderate
+
+    - name: migration_complexity
+      description: >
+        What's involved in switching from App to API — number porting process,
+        downtime expectations, chat history loss, template migration required.
+        Only relevant to items where migration is applicable.
+      detail_level: detailed
+
+  compliance:
+    - name: data_compliance
+      description: >
+        GDPR readiness, data hosting location, opt-in requirements, data processing
+        agreement availability. Critical for EU-based businesses.
+      detail_level: detailed
+
+    - name: verification_path
+      description: >
+        What verification options are available (OBA blue tick, Meta Verified, none),
+        requirements for each, and cost. The paths differ dramatically between App and API.
+      detail_level: moderate
+
+    - name: message_template_rules
+      description: >
+        Whether pre-approved templates are required, the three categories
+        (Marketing/Utility/Authentication), approval process, and what happens with
+        misclassification. API-specific operational overhead.
+      detail_level: moderate
+
+    - name: messaging_limits
+      description: >
+        Daily/monthly message caps, tier progression (Tier 0 = 250/day through 100K+),
+        portfolio-level limits (post-Oct 2025 update), and the ~2 marketing message/day
+        frequency cap per user.
+      detail_level: moderate
+
+    - name: ai_automation_policy
+      description: >
+        What AI and chatbot automation is permitted under current Meta rules.
+        Note the Jan 15, 2026 ban on general-purpose AI chatbots — only structured
+        purpose-driven workflows now allowed.
+      detail_level: moderate
+
+    - name: quality_risk
+      description: >
+        What happens when things go wrong — quality rating impacts (Green/Yellow/Red),
+        account suspension triggers, 7-30 day template restrictions, and recovery process.
+      detail_level: moderate
+
+  revenue:
+    - name: ads_integration
+      description: >
+        Compatibility with Click-to-WhatsApp Ads (CTWA), the 72-hour free messaging
+        window for CTWA-initiated conversations, and CAPI conversion tracking.
+      detail_level: moderate
+
+    - name: ecommerce_features
+      description: >
+        Product catalog support in-chat, WooCommerce/Shopify sync availability
+        through BSPs, and in-chat purchasing capabilities. Key for WordPress/WooCommerce stores.
+      detail_level: moderate
+
+  wpchat:
+    - name: wpchat_relevance
+      description: >
+        How WPChat.com plugin fits in or enhances this option. What does WPChat
+        add that this option alone doesn't have? Be specific and honest.
+      detail_level: detailed
+
+    - name: best_for
+      description: >
+        Ideal use case scenarios for this option — specific business types, sizes,
+        and goals where this is the right choice.
+      detail_level: moderate
+
+    - name: not_suited_for
+      description: When to rule this option out — be direct about the limitations.
+      detail_level: brief
+
+    - name: cta_angle
+      description: >
+        How to naturally plug WPChat.com in this context. What's the bridge from
+        this item to the WPChat.com plugin recommendation? Keep it editorial, not salesy.
+      detail_level: brief
+
+uncertain: []

@@ -1,0 +1,41 @@
+{
+  "item_name": "On-Premise API Sunset",
+  "definition": "Meta officially retired the WhatsApp On-Premises API on October 23, 2025. The final supported client version expired on that date, and messages sent to or from business numbers still registered for On-Premises API are no longer delivered. The Cloud API is now the only option for WhatsApp Business API access. Meta cited 90%+ infrastructure cost reductions for partners who migrated, along with 4x throughput improvements and 99.9% uptime.",
+  "target_audience": "Businesses that were previously hosting their own WhatsApp API infrastructure (typically enterprises with dedicated server teams). Also relevant as background context for any business evaluating the API today, since there is no longer a self-hosted option to consider.",
+  "key_features": [
+    "Cloud API is now the sole WhatsApp Business API deployment option -- no self-hosting available.",
+    "Up to 1,000 messages per second throughput on Cloud API (4x the On-Premises API maximum of ~250 MPS).",
+    "99.9% uptime SLA with sub-5-second p99 latency.",
+    "Partners report 90%+ reduction in infrastructure costs after migrating from on-premise to Cloud API -- no more server provisioning, database management, or client version updates.",
+    "All new API features since On-Premises API v2.53 (January 2024) have been Cloud API exclusive.",
+    "Meta hosts and manages the infrastructure, removing the need for businesses to maintain Docker containers, databases, and network configurations."
+  ],
+  "limitations": [
+    "Businesses lose direct control over their messaging infrastructure -- Meta hosts everything.",
+    "Data is processed on Meta's servers, which raises concerns for businesses with strict data sovereignty requirements (though EU data hosting options exist through select BSPs).",
+    "No option to customize or extend the API server behavior -- you work within Meta's Cloud API capabilities.",
+    "Businesses that had custom On-Premises integrations needed to rebuild them for the Cloud API's different endpoint structure.",
+    "Multiconnect (multiple containers for high availability) from On-Premises is replaced by Meta's managed redundancy, which businesses cannot configure themselves."
+  ],
+  "pricing": "Cloud API itself is free to access (no hosting fees from Meta). Businesses pay only per-message fees based on template category and recipient country, effective July 1, 2025. The massive cost saving comes from eliminating server infrastructure: On-Premises API required dedicated servers, databases (PostgreSQL/MySQL), Docker hosting, SSL certificates, and DevOps staff. Partners report saving 90%+ on infrastructure alone. BSPs may charge additional platform fees on top of Meta's per-message rates.",
+  "scalability_ceiling": "Cloud API supports up to 1,000 messages per second, which is sufficient for virtually all business use cases. Messaging tier limits (250/day up to 100K+/day unique contacts) are the practical ceiling, not throughput. The removal of on-premise means businesses no longer need to scale their own servers -- Meta handles horizontal scaling automatically.",
+  "setup_complexity": "2/5 for new businesses (Cloud API setup is simpler than On-Premises ever was). 4/5 for businesses migrating from On-Premises -- migration required re-registering phone numbers for Cloud API, rebuilding webhook integrations, updating API endpoint URLs, and testing all message flows. The migration process itself involved potential downtime during number re-registration.",
+  "migration_complexity": "The On-Premises to Cloud API migration was a significant undertaking. Key steps included: (1) Register business phone number for Cloud API via Meta Business Manager, (2) Update all webhook URLs and API endpoints, (3) Rebuild any custom integrations that relied on On-Premises-specific endpoints or local database access, (4) Re-submit and re-approve message templates (templates did carry over in most cases but needed verification), (5) Test all message flows end-to-end. Downtime during number re-registration was typically 5-15 minutes. Chat history from On-Premises was not transferred to Cloud API. BSPs like 360dialog, Wati, and others provided guided migration tools.",
+  "data_compliance": "Cloud API processes message data on Meta's servers. For GDPR compliance, businesses should use EU-certified BSPs that offer EU data residency options. Meta provides Data Processing Agreements (DPA) for Cloud API users. The loss of on-premise hosting means businesses can no longer guarantee data stays on their own servers, which was previously a compliance advantage of the On-Premises deployment for industries like healthcare and finance.",
+  "verification_path": "Business verification through Meta Business Manager is required for Cloud API access. This is the same process regardless of deployment model. The green tick (Official Business Account) is available through Meta Verified for Business or through BSPs that facilitate the OBA application.",
+  "message_template_rules": "Templates work identically on Cloud API as they did on On-Premises. The three categories (Marketing, Utility, Authentication) and approval process are unchanged. Templates that were approved for On-Premises generally carried over to Cloud API during migration.",
+  "messaging_limits": "Same tier system applies: Tier 0 (250/day) through unlimited. Cloud API's higher throughput (1,000 MPS vs 250 MPS on On-Premises) means that businesses hitting throughput bottlenecks on On-Premises now have 4x headroom. Portfolio-level limits (post-October 2025) apply across all numbers in a WhatsApp Business Account.",
+  "ai_automation_policy": "Same rules apply on Cloud API as would have applied on On-Premises. General-purpose AI chatbots are banned as of January 15, 2026. Structured AI workflows (support triage, order tracking, lead scoring) are permitted.",
+  "quality_risk": "Quality rating system (Green/Yellow/Red) operates identically on Cloud API. One difference: businesses no longer risk quality issues from self-hosted infrastructure problems (server downtime, failed message delivery due to local issues). Meta's 99.9% uptime removes infrastructure-related delivery failures as a quality risk factor.",
+  "ads_integration": "Click-to-WhatsApp Ads work identically with Cloud API. The 72-hour free messaging window for CTWA-initiated conversations applies. CAPI (Conversions API) integration for tracking ad performance is fully supported on Cloud API.",
+  "ecommerce_features": "Product catalogs, in-chat shopping, and WooCommerce/Shopify sync through BSPs all work on Cloud API. No ecommerce features were lost in the transition from On-Premises. Some catalog management features (like real-time inventory sync) were actually Cloud API exclusives that On-Premises never received.",
+  "wpchat_relevance": "The On-Premises sunset has no direct impact on WPChat.com, which operates at the WordPress site widget level rather than the API infrastructure level. However, it simplifies the overall picture for WordPress site owners: there is now exactly one API option (Cloud API), and WPChat.com sits on top of that as the front-end chat experience. Store owners do not need to worry about choosing between deployment models.",
+  "best_for": [
+    "Context for any business currently evaluating WhatsApp Business API -- understanding that Cloud API is the only path removes a decision point.",
+    "Enterprises that were on On-Premises and need to understand what changed and what they gained (throughput, cost savings, uptime).",
+    "WordPress/WooCommerce store owners who read older guides referencing On-Premises setup -- those instructions are now obsolete."
+  ],
+  "not_suited_for": "This topic is purely informational context. It is not a decision point for new businesses since there is only one option now (Cloud API). Businesses still using the free WhatsApp Business App are unaffected by this change entirely.",
+  "cta_angle": "The simplification from two API deployment models down to one makes WhatsApp integration more approachable for WordPress site owners. Pairing Cloud API access (through a BSP) with WPChat.com on the front end gives you a complete WhatsApp setup without any infrastructure headaches.",
+  "uncertain": []
+}

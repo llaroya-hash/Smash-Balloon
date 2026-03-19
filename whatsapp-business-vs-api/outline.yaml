@@ -1,0 +1,98 @@
+topic: "WhatsApp Business vs WhatsApp Business API: What's the Difference and Which Do You Need?"
+description: >
+  Comparison article for wpchat.com. Supporting article for
+  https://wpchat.com/whatsapp-business-marketing-guide/
+  Goal: educate WordPress site owners on the difference between the free
+  WhatsApp Business App and the WhatsApp Business API (Cloud API), and
+  naturally promote WPChat.com as the plugin that bridges both options.
+
+article_context:
+  site: wpchat.com
+  parent_article: https://wpchat.com/whatsapp-business-marketing-guide/
+  internal_links:
+    - https://wpchat.com/how-to-get-a-whatsapp-business-number-without-using-your-personal-phone/
+    - https://wpchat.com/whatsapp-vs-live-chat-which-is-best-for-your-wordpress-business/
+    - https://wpchat.com/free-wordpress-whatsapp-plugins/
+  no_existing_article: true  # confirmed via sitemap check 2026-03-18
+
+items:
+  - id: 1
+    name: WhatsApp Business App
+    description: The free mobile app for small businesses. Self-managed, no API access, single device.
+
+  - id: 2
+    name: WhatsApp Business API (Cloud API)
+    description: Meta's developer-facing API for medium/large businesses and automation. On-premise sunset Oct 2025 — Cloud API only now.
+
+  - id: 3
+    name: WPChat.com Plugin
+    description: WordPress plugin that adds WhatsApp (and other channels) to your site. Works with both App and API paths.
+
+  - id: 4
+    name: Pricing & Cost Comparison
+    description: What each option actually costs. App is free. API moved from conversation-based to per-message pricing. BSP fees on top.
+
+  - id: 5
+    name: Feature Comparison
+    description: Side-by-side capabilities — broadcast limits, multi-agent, automation, CRM integrations, catalog, Flows.
+
+  - id: 6
+    name: Setup & Technical Complexity
+    description: How hard each is to get running for a typical WordPress site owner. App vs. Cloud API direct vs. via BSP.
+
+  - id: 7
+    name: Use Case Scenarios
+    description: Who should use what — solopreneurs, small biz, ecommerce/WooCommerce stores, agencies, enterprises.
+
+  - id: 8
+    name: WhatsApp Business Solution Providers (BSPs)
+    description: Third-party platforms on top of the API (Twilio, 360dialog, Wati, Interakt, etc.) — what they add and what they cost.
+
+  - id: 9
+    name: Switching & Migration Path
+    description: What happens when you outgrow the App and need the API — number porting, downtime, chat history, templates.
+
+  - id: 10
+    name: WhatsApp Verification & Trust Badges
+    description: Green/blue tick options — free OBA (API only, strict requirements) vs. paid Meta Verified (App users). Major trust differentiator.
+
+  - id: 11
+    name: WhatsApp Flows
+    description: API-only feature for multi-screen in-chat forms (lead capture, booking, surveys). 158% higher conversion vs. web forms.
+
+  - id: 12
+    name: Click-to-WhatsApp Ads (CTWA)
+    description: Meta ads that open a WhatsApp chat. 72-hour free messaging window for CTWA-initiated conversations. CAPI tracking now available.
+
+  - id: 13
+    name: Quality Rating & Messaging Tier System
+    description: Oct 2025 update — limits now at portfolio level, Tier 0 (250/day) up to 100K+. Frequency cap ~2 marketing msgs/day per user.
+
+  - id: 14
+    name: Message Template Categories & Approval
+    description: API requires pre-approved templates (Marketing/Utility/Authentication). Misclassification auto-reclassified to higher price tier.
+
+  - id: 15
+    name: On-Premise API Sunset
+    description: Meta killed on-premise API Oct 2025. Cloud API is now the only option. 90%+ infrastructure cost reduction reported by partners.
+
+  - id: 16
+    name: WhatsApp Product Catalogs & Ecommerce
+    description: API users can display product catalogs in-chat. WooCommerce sync available via BSPs. Relevant for WordPress/WooCommerce stores.
+
+  - id: 17
+    name: AI & Chatbot Policy (2026 Restrictions)
+    description: Jan 15, 2026 — Meta banned general-purpose AI chatbots on the API. Structured workflows only (lead scoring, support triage, order tracking).
+
+  - id: 18
+    name: GDPR & Data Privacy Compliance
+    description: API meets GDPR requirements; free App does not. EU businesses need EU-certified BSP + double opt-in. German courts have awarded EUR 250-750/contact.
+
+  - id: 19
+    name: Competitor Landscape
+    description: Brief context on Telegram, Signal, etc. to help position WhatsApp (and WPChat) for WordPress site owners.
+
+execution:
+  batch_size: 3
+  items_per_agent: 6-7
+  output_dir: ./results
