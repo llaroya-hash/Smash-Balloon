@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smash Balloon Blog Performance Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+    .expand-btn { cursor: pointer; user-select: none; }
+    .month-body { display: none; }
+    .month-body.open { display: block; }
+    .chevron { transition: transform 0.2s; }
+    .chevron.open { transform: rotate(180deg); }
+    .t123-badge { display: inline-flex; align-items: center; padding: 2px 8px; border-radius: 9999px; font-size: 11px; font-weight: 600; }
+    .trend-bar { transition: width 0.4s ease; }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-900 min-h-screen">
+
+<!-- ============================================================
+     DATA BLOCK
+     Monthly sessions = real GA4 pulls (yearMonth dimension).
+     April + May top articles = real GA4 API data.
+     Revenue + transactions = GA4 Blog Posts segment screenshot.
+     Items marked FILL IN need manual updates from you.
+     ============================================================ -->
+<script>
+const DATA = {
+  period: "Q2 2026 (Apr 1 - Jun 30)",
+  brand: "Smash Balloon",
+  lastUpdated: "May 14, 2026",
+  owner: "Lianne Laroya",
+
+  // ---- Month-over-month trend (real GA4, yearMonth dimension) ----
+  // Sessions = landing page sessions on blog articles only (Blog Posts segment filter).
+  monthlyTrend: [
+    { month: "Apr 2026", sessions: 21632, mom: null, partial: false },
+    { month: "May 2026", sessions: 14505, mom: null, partial: true  },
+    // June: add at end of month
+    { month: "Jun 2026", sessions: null,  mom: null, partial: false },
+  ],
+
+  // ---- Q2 summary (Apr 1 - May 14) --------------------------------
+  summary: {
+    articlesPublished: null,   // FILL IN: new articles published this quarter
+    totalSessions: 30920,      // GA4: Blog Posts segment, Apr 1 - May 14 (confirmed screenshot)
+    organicRevenue: 1018.10,   // GA4: revenue from blog landing sessions, Apr 1 - May 14
+    transactions: 11,
+    t123UpdatesMade: null,     // FILL IN: T1/2/3 articles updated this quarter
+    vsQ1Sessions: null,        // FILL IN once Q1 is confirmed (Q1 = 93,483 by calendar month sum)
+    vsQ1Revenue: null,
+  },
+
+  // ---- Q2 monthly detail (top articles are real GA4 data) ---------
+  months: [
+    {
+      name: "April 2026",
+      sessions: 21632,
+      articlesPublished: null,   // FILL IN
+      t123Updates: null,         // FILL IN
+      revenue: null,             // FILL IN (pull Apr revenue from GA4)
+      topArticles: [
+        { title: "13 Hacks to Get More REAL Followers on Instagram", sessions: 894 },
+        { title: "Instagram Feed Not Loading? Here's the Fix", sessions: 691 },
+        { title: "How to Display Your Instagram on Your Website", sessions: 525 },
+        { title: "[NEW] Review Notification Popups on WordPress", sessions: 513 },
+        { title: "Instagram Scheduled Posts Not Working?", sessions: 302 },
+        { title: "Instagram Feed Not Showing New Posts? Easy Fix", sessions: 286 },
+        { title: "How to Embed a YouTube Playlist in WordPress", sessions: 279 },
+        { title: "How to Get More Views on Instagram Reels", sessions: 235 },
+        { title: "How to Make Money on TikTok Without Showing Your Face", sessions: 233 },
+        { title: "Make Money on YouTube Without Showing Your Face", sessions: 230 },
+      ],
+      newArticles: [],   // FILL IN: { date, title } for articles published in April
+      highlights: "",
+    },
+    {
+      name: "May 2026",
+      sessions: 14505,           // GA4: May 1-14 only (partial month)
+      articlesPublished: null,
+      t123Updates: null,
+      revenue: null,
+      partial: true,
+      partialNote: "May 1-14 only (14 of 31 days). Pacing ~32,000 sessions if current daily rate holds.",
+      topArticles: [
+        { title: "Instagram Feed Not Loading? Here's the Fix", sessions: 426 },
+        { title: "13 Hacks to Get More REAL Followers on Instagram", sessions: 397 },
+        { title: "Instagram Feed Not Showing New Posts? Easy Fix", sessions: 284 },
+        { title: "Google Reviews for Local Businesses", sessions: 212 },
+        { title: "YouTube Shorts Not Getting Views?", sessions: 165 },
+        { title: "Instagram Scheduled Posts Not Working?", sessions: 155 },
+        { title: "Is TikTok Worth It for Small Businesses?", sessions: 147 },
+        { title: "How to Get More Views on Instagram Reels", sessions: 136 },
+        { title: "Social Proof Statistics", sessions: 132 },
+        { title: "How to Use YouTube for Business", sessions: 126 },
+      ],
+      newArticles: [],
+      highlights: "",
+    },
+    {
+      name: "June 2026",
+      sessions: null,
+      articlesPublished: null,
+      t123Updates: null,
+      revenue: null,
+      topArticles: [],
+      newArticles: [],
+      highlights: "Month hasn't started. Fill in at the end of June.",
+    },
+  ],
+
+  // ---- T1/2/3 log (fill in manually each time an article is updated) ---
+  // This is what Joel asked for in Q4 2025: track what was updated, who updated it, and when.
+  t123Log: [
+    // { article: "Instagram Feed Not Loading Fix", tier: "T1", updatedBy: "Sajjan", date: "Apr 8", sessionsBefore: 980, sessionsAfter: 1118, delta: "+14%" },
+  ],
+
+  // ---- Top articles ranked (Apr 1 - May 14, real GA4 data) --------
+  topArticles: [
+    { title: "13 Hacks to Get More REAL Followers on Instagram", sessions: 1288, formatType: "how-to" },
+    { title: "Instagram Feed Not Loading? Here's the Fix", sessions: 1118, formatType: "troubleshooting" },
+    { title: "How to Display Your Instagram on Your Website", sessions: 623, formatType: "how-to" },
+    { title: "Instagram Feed Not Showing New Posts? Easy Fix", sessions: 565, formatType: "troubleshooting" },
+    { title: "[NEW] Review Notification Popups on WordPress", sessions: 552, formatType: "announcement" },
+    { title: "Instagram Scheduled Posts Not Working?", sessions: 457, formatType: "troubleshooting" },
+    { title: "How to Embed a YouTube Playlist in WordPress", sessions: 384, formatType: "how-to" },
+    { title: "How to Get More Views on Instagram Reels", sessions: 368, formatType: "how-to" },
+    { title: "How to Make Money on TikTok Without Showing Your Face", sessions: 320, formatType: "how-to" },
+    { title: "Make Money on YouTube Without Showing Your Face", sessions: 309, formatType: "how-to" },
+    { title: "YouTube Shorts Not Getting Views?", sessions: 307, formatType: "troubleshooting" },
+    { title: "How to Set Up Instagram Shopping", sessions: 302, formatType: "how-to" },
+    { title: "Fix: Instagram Embed Not Working", sessions: 295, formatType: "troubleshooting" },
+    { title: "How to Display Testimonials on Your Website", sessions: 282, formatType: "how-to" },
+    { title: "Embed Instagram Feed for Free", sessions: 281, formatType: "how-to" },
+    { title: "Twitter Widget Examples", sessions: 255, formatType: "list" },
+    { title: "Best Social Feed Aggregator", sessions: 239, formatType: "list" },
+    { title: "How to Get Smash Balloon Instagram Feed Plugin for Free", sessions: 239, formatType: "how-to" },
+    { title: "How to Get More Likes on Your Facebook Business Page", sessions: 231, formatType: "how-to" },
+    { title: "How to Promote YouTube Videos for Free", sessions: 229, formatType: "how-to" },
+    { title: "Instagram Shopping Not Available in Your Region", sessions: 228, formatType: "troubleshooting" },
+    { title: "How to Increase Watch Hours on YouTube", sessions: 226, formatType: "how-to" },
+    { title: "Google Reviews for Local Businesses", sessions: 224, formatType: "guide" },
+    { title: "Reasons Why You Should Never Buy Facebook Followers", sessions: 219, formatType: "list" },
+    { title: "Twitter Embed Timeline", sessions: 215, formatType: "guide" },
+    { title: "Solve: Facebook Embed Video Not Working", sessions: 209, formatType: "troubleshooting" },
+    { title: "Embed Instagram Reel on Website", sessions: 201, formatType: "how-to" },
+    { title: "How to Add a Facebook Feed to Your WordPress Website", sessions: 188, formatType: "how-to" },
+    { title: "Get More Instagram Comments", sessions: 186, formatType: "how-to" },
+    { title: "Free Google Review Widget", sessions: 186, formatType: "guide" },
+    { title: "How to Increase Twitter Engagement", sessions: 178, formatType: "how-to" },
+    { title: "How to Embed Instagram Grid (WordPress Plugin)", sessions: 171, formatType: "how-to" },
+    { title: "Google Reviews on Website: Examples", sessions: 168, formatType: "guide" },
+    { title: "Is TikTok Worth It for Small Businesses?", sessions: 163, formatType: "guide" },
+    { title: "How to Embed Instagram Videos on Your Website", sessions: 163, formatType: "how-to" },
+    { title: "Instagram Feed on Website: Examples", sessions: 163, formatType: "guide" },
+    { title: "Elementor: Hide YouTube Video Title", sessions: 162, formatType: "how-to" },
+    { title: "How to Get More Views on TikTok After Posting", sessions: 158, formatType: "how-to" },
+    { title: "Embed Google Reviews in WordPress", sessions: 155, formatType: "how-to" },
+    { title: "How to Display Facebook Events on Your Website", sessions: 154, formatType: "how-to" },
+    { title: "Best Coming Soon Plugin", sessions: 152, formatType: "list" },
+    { title: "Types of Facebook Posts to Boost Page Engagement", sessions: 150, formatType: "list" },
+    { title: "How to Get More Facebook Followers for Business", sessions: 149, formatType: "how-to" },
+    { title: "How to Add an Instagram Widget to WordPress", sessions: 148, formatType: "how-to" },
+  ],
+
+  // ---- Format type performance (real GA4, Apr 1 - May 14) ---------
+  formatPerformance: [
+    { type: "Troubleshooting", avgSessions: 454, count: 7,  color: "#ef4444" },
+    { type: "How-to",          avgSessions: 309, count: 20, color: "#3b82f6" },
+    { type: "List / Best",     avgSessions: 203, count: 5,  color: "#10b981" },
+    { type: "Guide / Other",   avgSessions: 190, count: 12, color: "#6b7280" },
+  ],
+
+  // ---- AI insights ------------------------------------------------
+  aiInsights: {
+    generatedOn: "May 14, 2026",
+    headline: "Sessions recovered in April after a 3-month slide, and May is pacing ahead of April's daily rate.",
+    body: [
+      "Sessions dropped 33% Jan-Feb and another 26% Feb-Mar. April broke that slide with +0.8% vs March, and the first 14 days of May are averaging 1,036 sessions/day vs April's 721/day. If that holds, May could reach ~32,000 sessions. Worth watching weekly to see whether that pace continues or tapers.",
+      "The blog is generating real, trackable revenue: $1,018.10 from 11 transactions in the first 44 days of Q2. The highest-converting articles are not the highest-traffic ones. Mid-tier articles with strong commercial intent (40-100 sessions) are the quiet revenue drivers, so protecting them in rankings matters as much as protecting the big traffic articles.",
+      "Troubleshooting articles lead on sessions: the Instagram feed not loading fix and the followers growth article are the top 2 by a margin. They attract high-intent visitors with a specific problem. Any ranking dip on these two articles is the highest-risk scenario for the quarter.",
+      "Instagram topics dominate by volume. The top 6 articles by sessions are all Instagram-related. The Review Notification popup article (552 sessions) is a notable exception and suggests the product announcement format has genuine reach when the hook is strong.",
+    ],
+    recommendation: "Fill in the T1/2/3 log below with every article Sajjan has updated this quarter, even retroactively. That log is exactly what Joel asked for in the Q4 review. Also worth pulling April's revenue from GA4 to break out Apr vs May on the revenue side.",
+  },
+};
+</script>
+
+<!-- ============================================================
+     PAGE LAYOUT
+     ============================================================ -->
+<div class="max-w-5xl mx-auto px-4 py-10">
+
+  <!-- Header -->
+  <div class="mb-8">
+    <div class="flex items-start justify-between flex-wrap gap-4">
+      <div>
+        <p class="text-xs font-semibold uppercase tracking-widest text-blue-600 mb-1" id="brand-label"></p>
+        <h1 class="text-3xl font-bold text-gray-900">Blog Performance Dashboard</h1>
+        <p class="mt-1 text-gray-500 text-sm" id="period-label"></p>
+      </div>
+      <div class="text-right text-xs text-gray-400 space-y-0.5">
+        <div id="owner-label"></div>
+        <div id="updated-label"></div>
+        <div class="text-blue-400 font-medium">Sessions: live GA4 data</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Monthly sessions trend (PRIMARY section) -->
+  <div class="bg-white rounded-xl border border-gray-200 p-6 mb-6 shadow-sm">
+    <div class="flex items-center justify-between mb-5">
+      <div>
+        <p class="text-xs font-semibold uppercase tracking-widest text-gray-400">Monthly Sessions Trend</p>
+        <p class="text-xs text-gray-400 mt-0.5">Q2 2026 · Blog Posts segment, landing page sessions</p>
+      </div>
+      <span class="text-xs bg-green-100 text-green-700 font-semibold px-2 py-0.5 rounded-full">Live GA4 data</span>
+    </div>
+    <div id="trend-chart"></div>
+  </div>
+
+  <!-- Q2 detail cards (April / May / June expandable) -->
+  <div class="mb-6">
+    <div class="flex items-center justify-between mb-3">
+      <p class="text-xs font-semibold uppercase tracking-widest text-gray-400">Q2 Monthly Detail</p>
+      <span class="text-xs bg-green-100 text-green-700 font-semibold px-2 py-0.5 rounded-full">Top articles: real GA4 data</span>
+    </div>
+    <div class="space-y-3" id="months-container"></div>
+  </div>
+
+  <!-- Q2 summary metrics -->
+  <div class="bg-white rounded-xl border border-gray-200 p-5 mb-6 shadow-sm">
+    <p class="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-4">Q2 2026 To Date (Apr 1 - May 14)</p>
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4" id="summary-cards"></div>
+  </div>
+
+  <!-- Format performance -->
+  <div class="bg-white rounded-xl border border-gray-200 p-5 mb-6 shadow-sm">
+    <div class="flex items-center justify-between mb-4">
+      <div>
+        <p class="text-xs font-semibold uppercase tracking-widest text-gray-400">Format Type Performance</p>
+        <p class="text-xs text-gray-400 mt-0.5">Average sessions per article type, Apr 1 - May 14</p>
+      </div>
+      <span class="text-xs bg-green-100 text-green-700 font-semibold px-2 py-0.5 rounded-full">Live GA4 data</span>
+    </div>
+    <div id="format-bars"></div>
+  </div>
+
+  <!-- All articles table -->
+  <div class="bg-white rounded-xl border border-gray-200 p-5 mb-6 shadow-sm">
+    <div class="flex items-center justify-between mb-4">
+      <div>
+        <p class="text-xs font-semibold uppercase tracking-widest text-gray-400">All Blog Articles - Ranked by Sessions</p>
+        <p class="text-xs text-gray-400 mt-0.5">Apr 1 - May 14, 2026</p>
+      </div>
+      <span class="text-xs bg-green-100 text-green-700 font-semibold px-2 py-0.5 rounded-full">Live GA4 data</span>
+    </div>
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead>
+          <tr class="border-b border-gray-100">
+            <th class="text-left pb-2 pr-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">#</th>
+            <th class="text-left pb-2 pr-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">Article</th>
+            <th class="text-right pb-2 pr-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">Sessions</th>
+            <th class="text-left pb-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">Type</th>
+          </tr>
+        </thead>
+        <tbody id="articles-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- T1/2/3 log -->
+  <div class="bg-white rounded-xl border border-gray-200 p-5 mb-6 shadow-sm">
+    <div class="flex items-center justify-between mb-4">
+      <div>
+        <p class="text-xs font-semibold uppercase tracking-widest text-gray-400">T1/2/3 Update Log</p>
+        <p class="text-xs text-gray-400 mt-1">Track every article update here: what, who, when, and the session delta. This is what Joel asked for in Q4.</p>
+      </div>
+      <span class="text-xs bg-amber-100 text-amber-700 font-semibold px-2 py-0.5 rounded-full">Fill in manually</span>
+    </div>
+    <div id="t123-content"></div>
+  </div>
+
+  <!-- AI Insights -->
+  <div class="bg-blue-50 border border-blue-200 rounded-xl p-6 mb-10">
+    <div class="flex items-center gap-2 mb-4">
+      <svg class="w-4 h-4 text-blue-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd"/></svg>
+      <p class="text-xs font-semibold uppercase tracking-widest text-blue-600">AI Analysis</p>
+      <span class="text-xs text-blue-400" id="ai-date"></span>
+    </div>
+    <p class="text-base font-semibold text-blue-900 mb-4" id="ai-headline"></p>
+    <div class="space-y-3 text-sm text-blue-800 leading-relaxed" id="ai-body"></div>
+    <div class="mt-4 pt-4 border-t border-blue-200">
+      <p class="text-xs font-semibold text-blue-600 uppercase tracking-wider mb-1">Recommendation</p>
+      <p class="text-sm text-blue-900 font-medium" id="ai-recommendation"></p>
+    </div>
+  </div>
+
+  <p class="text-center text-xs text-gray-400">Smash Balloon Content Team &bull; <span id="footer-period"></span></p>
+</div>
+
+<!-- ============================================================
+     RENDER SCRIPT
+     ============================================================ -->
+<script>
+function fmt(n) {
+  if (n === null || n === undefined) return '—';
+  return typeof n === 'number' ? n.toLocaleString() : n;
+}
+
+// Header
+document.getElementById('brand-label').textContent = DATA.brand;
+document.getElementById('period-label').textContent = DATA.period;
+document.getElementById('owner-label').textContent = 'Owner: ' + DATA.owner;
+document.getElementById('updated-label').textContent = 'Last updated: ' + DATA.lastUpdated;
+document.getElementById('footer-period').textContent = DATA.period;
+
+// ---- Monthly trend chart ----------------------------------------
+const trendEl = document.getElementById('trend-chart');
+const validSessions = DATA.monthlyTrend.filter(m => m.sessions !== null).map(m => m.sessions);
+const maxSessions = Math.max(...validSessions);
+
+DATA.monthlyTrend.forEach((m, idx) => {
+  const pct = m.sessions !== null ? Math.round((m.sessions / maxSessions) * 100) : 0;
+  const barColor = m.sessions === null ? '#e5e7eb' : '#3b82f6';
+
+  // MoM vs previous month
+  let momBadge = '';
+  if (idx > 0 && DATA.monthlyTrend[idx - 1].sessions !== null && m.sessions !== null) {
+    const prev = DATA.monthlyTrend[idx - 1].sessions;
+    const momPct = Math.round(((m.sessions - prev) / prev) * 100 * 10) / 10;
+    const positive = momPct >= 0;
+    const sign = positive ? '+' : '';
+    momBadge = `<span class="ml-2 text-xs font-semibold px-1.5 py-0.5 rounded ${positive ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}">${sign}${momPct}% vs ${DATA.monthlyTrend[idx-1].month}</span>`;
+  }
+
+  const sessionLabel = m.sessions !== null
+    ? `<span class="text-sm font-semibold text-gray-900 tabular-nums">${m.sessions.toLocaleString()}</span>${momBadge}${m.partial ? '<span class="ml-2 text-xs text-amber-600 font-medium">partial month</span>' : ''}`
+    : `<span class="text-sm text-gray-400">no data yet</span>`;
+
+  trendEl.innerHTML += `
+    <div class="flex items-center gap-3 mb-4">
+      <div class="w-20 text-xs font-medium text-gray-600 text-right shrink-0">${m.month}</div>
+      <div class="flex-1 bg-gray-100 rounded-full h-6 relative overflow-hidden">
+        ${m.sessions !== null
+          ? `<div class="trend-bar h-6 rounded-full" style="width:${pct}%;background:${barColor}"></div>`
+          : `<div class="h-6 rounded-full bg-gray-100 border-2 border-dashed border-gray-200"></div>`}
+      </div>
+      <div class="w-64 text-xs text-gray-500 shrink-0 flex items-center flex-wrap gap-1">${sessionLabel}</div>
+    </div>`;
+});
+
+// ---- Q2 monthly detail cards ------------------------------------
+const tierColors = { T1: 'bg-purple-100 text-purple-700', T2: 'bg-blue-100 text-blue-700', T3: 'bg-gray-100 text-gray-600' };
+const monthsEl = document.getElementById('months-container');
+
+DATA.months.forEach((m, idx) => {
+  const id = 'month-' + idx;
+  const sessionText = m.sessions !== null
+    ? m.sessions.toLocaleString() + ' sessions' + (m.partial ? ' (partial)' : '')
+    : 'No data yet';
+
+  const statsText = [
+    m.articlesPublished !== null ? m.articlesPublished + ' new articles' : null,
+    m.t123Updates !== null ? m.t123Updates + ' T1/2/3 updates' : null,
+  ].filter(Boolean).join(' · ') || 'Fill in article counts manually';
+
+  const topHTML = m.topArticles.length > 0
+    ? `<div class="mt-4">
+        <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Top Articles by Sessions${m.partial ? ' ('+m.partialNote+')' : ''}</p>
+        <table class="w-full text-sm">
+          <thead><tr class="border-b border-gray-100">
+            <th class="text-left pb-2 pr-4 text-xs text-gray-400 font-semibold uppercase tracking-wider">#</th>
+            <th class="text-left pb-2 pr-4 text-xs text-gray-400 font-semibold uppercase tracking-wider">Article</th>
+            <th class="text-right pb-2 text-xs text-gray-400 font-semibold uppercase tracking-wider">Sessions</th>
+          </tr></thead>
+          <tbody>
+            ${m.topArticles.map((a, i) => `<tr class="border-b border-gray-50"><td class="py-2 pr-4 text-xs text-gray-400 tabular-nums">${i+1}</td><td class="py-2 pr-4 text-gray-800">${a.title}</td><td class="py-2 text-right tabular-nums font-medium text-gray-900">${a.sessions.toLocaleString()}</td></tr>`).join('')}
+          </tbody>
+        </table>
+      </div>`
+    : `<p class="text-sm text-gray-400 mt-4 italic">${m.highlights || 'No data yet.'}</p>`;
+
+  const newHTML = m.newArticles && m.newArticles.length > 0
+    ? `<div class="mt-4">
+        <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">New Articles Published</p>
+        ${m.newArticles.map(a => `<div class="flex gap-3 py-2 border-b border-gray-50 last:border-0 text-sm"><span class="text-gray-400 w-10 shrink-0">${a.date}</span><span class="text-gray-800">${a.title}</span></div>`).join('')}
+      </div>` : '';
+
+  const revenueChip = m.revenue !== null
+    ? `<span class="text-xs bg-green-50 text-green-700 font-semibold px-2 py-0.5 rounded ml-2">$${m.revenue.toLocaleString('en-US', {minimumFractionDigits:2})} revenue</span>`
+    : '';
+
+  const partialChip = m.partial
+    ? `<span class="text-xs bg-amber-100 text-amber-700 font-semibold px-2 py-0.5 rounded ml-2">In progress</span>`
+    : (m.sessions === null ? `<span class="text-xs bg-gray-100 text-gray-500 font-semibold px-2 py-0.5 rounded ml-2">Not started</span>` : '');
+
+  monthsEl.innerHTML += `
+    <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+      <button class="expand-btn w-full flex items-center justify-between px-5 py-4 text-left" onclick="toggleMonth('${id}')">
+        <div class="flex items-center gap-3 flex-wrap">
+          <span class="font-semibold text-gray-900">${m.name}</span>
+          ${partialChip}
+          ${revenueChip}
+          <span class="text-sm text-gray-500">${sessionText}</span>
+          <span class="text-xs text-gray-400">${statsText}</span>
+        </div>
+        <svg id="${id}-chev" class="chevron w-4 h-4 text-gray-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+        </svg>
+      </button>
+      <div id="${id}" class="month-body px-5 pb-5 border-t border-gray-100">
+        ${topHTML}${newHTML}
+        ${m.topArticles.length > 0 && m.highlights ? `<div class="mt-4 bg-gray-50 rounded-lg p-3 text-sm text-gray-600 italic">${m.highlights}</div>` : ''}
+      </div>
+    </div>`;
+});
+
+function toggleMonth(id) {
+  document.getElementById(id).classList.toggle('open');
+  document.getElementById(id + '-chev').classList.toggle('open');
+}
+
+// ---- Summary cards ----------------------------------------------
+const cardDefs = [
+  { label: 'Blog Sessions', value: fmt(DATA.summary.totalSessions), sub: 'Apr 1 - May 14', real: true },
+  { label: 'Blog Revenue', value: DATA.summary.organicRevenue ? '$' + DATA.summary.organicRevenue.toLocaleString('en-US', {minimumFractionDigits:2}) : '—', sub: DATA.summary.transactions + ' transactions', real: true },
+  { label: 'Articles Published', value: fmt(DATA.summary.articlesPublished), sub: 'new this quarter', real: false },
+  { label: 'T1/2/3 Updates', value: fmt(DATA.summary.t123UpdatesMade), sub: 'articles refreshed', real: false },
+];
+const cardsEl = document.getElementById('summary-cards');
+cardDefs.forEach(c => {
+  const border = c.real ? 'border-green-200' : 'border-gray-200';
+  const badge = c.real ? '<span class="text-xs text-green-600 font-semibold">GA4</span>' : '<span class="text-xs text-amber-500 font-semibold">Fill in</span>';
+  cardsEl.innerHTML += `
+    <div class="bg-white rounded-xl border ${border} p-4 shadow-sm">
+      <div class="flex items-center justify-between mb-1">
+        <p class="text-xs text-gray-400">${c.label}</p>${badge}
+      </div>
+      <p class="text-2xl font-bold text-gray-900">${c.value}</p>
+      <p class="text-xs text-gray-400 mt-1">${c.sub}</p>
+    </div>`;
+});
+
+// ---- Format bars ------------------------------------------------
+const maxAvg = Math.max(...DATA.formatPerformance.map(f => f.avgSessions));
+const fmtEl = document.getElementById('format-bars');
+DATA.formatPerformance.forEach(f => {
+  const pct = Math.round((f.avgSessions / maxAvg) * 100);
+  fmtEl.innerHTML += `
+    <div class="flex items-center gap-3 mb-3">
+      <div class="w-32 text-xs text-gray-700 font-medium text-right shrink-0">${f.type}</div>
+      <div class="flex-1 bg-gray-100 rounded-full h-5">
+        <div class="h-5 rounded-full" style="width:${pct}%;background:${f.color}"></div>
+      </div>
+      <div class="text-sm font-semibold text-gray-800 w-20 shrink-0">${fmt(f.avgSessions)} avg</div>
+      <div class="text-xs text-gray-400 w-16 shrink-0">${f.count} articles</div>
+    </div>`;
+});
+
+// ---- Articles table ---------------------------------------------
+const typeColors = {
+  'how-to':         'bg-blue-100 text-blue-700',
+  'troubleshooting':'bg-red-100 text-red-700',
+  'list':           'bg-green-100 text-green-700',
+  'guide':          'bg-purple-100 text-purple-700',
+  'announcement':   'bg-yellow-100 text-yellow-700',
+};
+const tbody = document.getElementById('articles-tbody');
+DATA.topArticles.forEach((a, i) => {
+  const colorClass = typeColors[a.formatType] || 'bg-gray-100 text-gray-600';
+  tbody.innerHTML += `
+    <tr class="border-b border-gray-50 hover:bg-gray-50 transition-colors">
+      <td class="py-2.5 pr-4 text-xs text-gray-400 tabular-nums">${i + 1}</td>
+      <td class="py-2.5 pr-4 text-gray-800">${a.title}</td>
+      <td class="py-2.5 pr-4 text-right tabular-nums font-semibold text-gray-900">${fmt(a.sessions)}</td>
+      <td class="py-2.5"><span class="t123-badge ${colorClass}">${a.formatType}</span></td>
+    </tr>`;
+});
+
+// ---- T1/2/3 log -------------------------------------------------
+const t123El = document.getElementById('t123-content');
+if (DATA.t123Log.length === 0) {
+  t123El.innerHTML = `
+    <div class="border-2 border-dashed border-gray-200 rounded-lg p-6 text-center">
+      <p class="text-sm text-gray-500 mb-2">No entries yet. Add a row each time an article is updated.</p>
+      <p class="text-xs text-gray-400">Open index.html, find the t123Log array, and add rows like:<br>
+      <code class="bg-gray-100 px-2 py-0.5 rounded text-xs">{ article: "Title", tier: "T1", updatedBy: "Sajjan", date: "Apr 8", sessionsBefore: 980, sessionsAfter: 1118, delta: "+14%" }</code></p>
+    </div>`;
+} else {
+  t123El.innerHTML = `<div class="overflow-x-auto"><table class="w-full text-sm">
+    <thead><tr class="border-b border-gray-100">
+      <th class="text-left py-2 pr-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">Article</th>
+      <th class="text-left py-2 pr-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">Tier</th>
+      <th class="text-left py-2 pr-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">By</th>
+      <th class="text-left py-2 pr-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">Date</th>
+      <th class="text-right py-2 pr-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">Before</th>
+      <th class="text-right py-2 pr-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">After</th>
+      <th class="text-right py-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">Delta</th>
+    </tr></thead>
+    <tbody>${DATA.t123Log.map(r => {
+      const positive = r.delta && r.delta.startsWith('+');
+      return `<tr class="border-b border-gray-50 hover:bg-gray-50">
+        <td class="py-2.5 pr-4 text-gray-800">${r.article}</td>
+        <td class="py-2.5 pr-4"><span class="t123-badge ${tierColors[r.tier] || ''}">${r.tier}</span></td>
+        <td class="py-2.5 pr-4 text-gray-600">${r.updatedBy}</td>
+        <td class="py-2.5 pr-4 text-gray-500">${r.date}</td>
+        <td class="py-2.5 pr-4 text-right tabular-nums text-gray-700">${fmt(r.sessionsBefore)}</td>
+        <td class="py-2.5 pr-4 text-right tabular-nums text-gray-700">${r.sessionsAfter !== null ? fmt(r.sessionsAfter) : '—'}</td>
+        <td class="py-2.5 text-right text-sm ${positive ? 'text-green-600 font-semibold' : 'text-gray-400'}">${r.delta || '—'}</td>
+      </tr>`;
+    }).join('')}</tbody></table></div>`;
+}
+
+// ---- AI Insights ------------------------------------------------
+document.getElementById('ai-date').textContent = '- ' + DATA.aiInsights.generatedOn;
+document.getElementById('ai-headline').textContent = DATA.aiInsights.headline;
+document.getElementById('ai-recommendation').textContent = DATA.aiInsights.recommendation;
+const aiBodyEl = document.getElementById('ai-body');
+DATA.aiInsights.body.forEach(p => { aiBodyEl.innerHTML += `<p>${p}</p>`; });
+</script>
+</body>
+</html>
