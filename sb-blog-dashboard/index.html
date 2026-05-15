@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Smash Balloon Blog Performance Dashboard</title>
+  <title>Smash Balloon Content Dashboard Q2 2026</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
@@ -12,19 +12,12 @@
     .month-body.open { display: block; }
     .chevron { transition: transform 0.2s; }
     .chevron.open { transform: rotate(180deg); }
-    .t123-badge { display: inline-flex; align-items: center; padding: 2px 8px; border-radius: 9999px; font-size: 11px; font-weight: 600; }
+    .badge { display: inline-flex; align-items: center; padding: 2px 8px; border-radius: 9999px; font-size: 11px; font-weight: 600; }
     .trend-bar { transition: width 0.4s ease; }
   </style>
 </head>
 <body class="bg-gray-50 text-gray-900 min-h-screen">
 
-<!-- ============================================================
-     DATA BLOCK
-     Monthly sessions = real GA4 pulls (yearMonth dimension).
-     April + May top articles = real GA4 API data.
-     Revenue + transactions = GA4 Blog Posts segment screenshot.
-     Items marked FILL IN need manual updates from you.
-     ============================================================ -->
 <script>
 const DATA = {
   period: "Q2 2026 (Apr 1 - Jun 30)",
@@ -32,34 +25,31 @@ const DATA = {
   lastUpdated: "May 14, 2026",
   owner: "Lianne Laroya",
 
-  // ---- Month-over-month trend (real GA4, yearMonth dimension) ----
-  // Sessions = landing page sessions on blog articles only (Blog Posts segment filter).
+  // ---- Monthly sessions trend (real GA4, yearMonth dimension) ----
   monthlyTrend: [
-    { month: "Apr 2026", sessions: 21632, mom: null, partial: false },
-    { month: "May 2026", sessions: 14505, mom: null, partial: true  },
-    // June: add at end of month
-    { month: "Jun 2026", sessions: null,  mom: null, partial: false },
+    { month: "Apr 2026", sessions: 21632, partial: false },
+    { month: "May 2026", sessions: 14505, partial: true  },
+    { month: "Jun 2026", sessions: null,  partial: false },
   ],
 
   // ---- Q2 summary (Apr 1 - May 14) --------------------------------
   summary: {
-    articlesPublished: null,   // FILL IN: new articles published this quarter
-    totalSessions: 30920,      // GA4: Blog Posts segment, Apr 1 - May 14 (confirmed screenshot)
-    organicRevenue: 1018.10,   // GA4: revenue from blog landing sessions, Apr 1 - May 14
+    articlesPublished: null,
+    totalSessions: 30920,
+    organicRevenue: 1018.10,
     transactions: 11,
-    t123UpdatesMade: null,     // FILL IN: T1/2/3 articles updated this quarter
-    vsQ1Sessions: null,        // FILL IN once Q1 is confirmed (Q1 = 93,483 by calendar month sum)
-    vsQ1Revenue: null,
+    t123UpdatesMade: null,
   },
 
-  // ---- Q2 monthly detail (top articles are real GA4 data) ---------
+  // ---- Q2 monthly detail -------------------------------------------
   months: [
     {
       name: "April 2026",
       sessions: 21632,
-      articlesPublished: null,   // FILL IN
-      t123Updates: null,         // FILL IN
-      revenue: null,             // FILL IN (pull Apr revenue from GA4)
+      articlesPublished: null,
+      t123Updates: null,
+      revenue: null,
+      partial: false,
       topArticles: [
         { title: "13 Hacks to Get More REAL Followers on Instagram", sessions: 894 },
         { title: "Instagram Feed Not Loading? Here's the Fix", sessions: 691 },
@@ -72,17 +62,16 @@ const DATA = {
         { title: "How to Make Money on TikTok Without Showing Your Face", sessions: 233 },
         { title: "Make Money on YouTube Without Showing Your Face", sessions: 230 },
       ],
-      newArticles: [],   // FILL IN: { date, title } for articles published in April
-      highlights: "",
+      newArticles: [],
     },
     {
       name: "May 2026",
-      sessions: 14505,           // GA4: May 1-14 only (partial month)
+      sessions: 14505,
       articlesPublished: null,
       t123Updates: null,
       revenue: null,
       partial: true,
-      partialNote: "May 1-14 only (14 of 31 days). Pacing ~32,000 sessions if current daily rate holds.",
+      partialNote: "May 1-14 only. Pacing ~32,000 sessions for full month.",
       topArticles: [
         { title: "Instagram Feed Not Loading? Here's the Fix", sessions: 426 },
         { title: "13 Hacks to Get More REAL Followers on Instagram", sessions: 397 },
@@ -96,7 +85,6 @@ const DATA = {
         { title: "How to Use YouTube for Business", sessions: 126 },
       ],
       newArticles: [],
-      highlights: "",
     },
     {
       name: "June 2026",
@@ -104,19 +92,56 @@ const DATA = {
       articlesPublished: null,
       t123Updates: null,
       revenue: null,
+      partial: false,
       topArticles: [],
       newArticles: [],
-      highlights: "Month hasn't started. Fill in at the end of June.",
     },
   ],
 
-  // ---- T1/2/3 log (fill in manually each time an article is updated) ---
-  // This is what Joel asked for in Q4 2025: track what was updated, who updated it, and when.
-  t123Log: [
-    // { article: "Instagram Feed Not Loading Fix", tier: "T1", updatedBy: "Sajjan", date: "Apr 8", sessionsBefore: 980, sessionsAfter: 1118, delta: "+14%" },
+  // ---- Email campaigns (fill in from Lindris after each send) -----
+  // CTR trend is a Q2 KPI — log every campaign here.
+  emails: [
+    // { date: "Apr 10", subject: "Building Trust Newsletter", segment: "All", recipients: 559709, openRate: 27.82, ctr: 0.09, revenue: 0 },
   ],
 
-  // ---- Top articles ranked (Apr 1 - May 14, real GA4 data) --------
+  // ---- Experiments ------------------------------------------------
+  // Each experiment Joel or Lianne runs. Covers the leadership KPI.
+  // status options: "planned" | "running" | "complete"
+  experiments: [
+    // { name: "April Lite redirect test", hypothesis: "Redirecting /free to /lite will increase Lite conversions", startDate: "Apr 1", endDate: "Apr 30", status: "complete", result: "+X% CTR vs baseline" },
+  ],
+
+  // ---- Growth proposals -------------------------------------------
+  // Counts toward the "2+ growth proposals without being asked" leadership KPI.
+  // status options: "pitched" | "approved" | "in progress" | "shipped" | "declined"
+  proposals: [
+    // { name: "Dog-fooding Reviews Feed on SB product pages", datePitched: "Apr X", status: "pitched", outcome: "" },
+    // { name: "Reddit/community monitoring system", datePitched: "Apr X", status: "pitched", outcome: "" },
+  ],
+
+  // ---- Sajjan output tracker --------------------------------------
+  // Track against Q2 targets. Update weekly.
+  sajjan: {
+    targets: {
+      wpchatArticles: null,    // FILL IN: Q2 target for WPChat blog posts
+      t123Updates: null,       // FILL IN: Q2 target for T1/2/3 updates
+    },
+    actual: {
+      wpchatArticles: null,    // FILL IN: articles published so far
+      t123Updates: null,       // FILL IN: T1/2/3 updates done so far
+    },
+    log: [
+      // { week: "Apr 7", output: "Published: X article. Updated: Y article." },
+    ],
+  },
+
+  // ---- T1/2/3 update log ------------------------------------------
+  // Add a row every time an article is updated. Joel's Q4 ask.
+  t123Log: [
+    // { article: "Instagram Feed Not Loading Fix", tier: "T1", updatedBy: "Sajjan", date: "Apr 8", sessionsBefore: 980, sessionsAfter: null, delta: null },
+  ],
+
+  // ---- Top articles (Apr 1 - May 14, real GA4) --------------------
   topArticles: [
     { title: "13 Hacks to Get More REAL Followers on Instagram", sessions: 1288, formatType: "how-to" },
     { title: "Instagram Feed Not Loading? Here's the Fix", sessions: 1118, formatType: "troubleshooting" },
@@ -164,32 +189,16 @@ const DATA = {
     { title: "How to Add an Instagram Widget to WordPress", sessions: 148, formatType: "how-to" },
   ],
 
-  // ---- Format type performance (real GA4, Apr 1 - May 14) ---------
+  // ---- Format performance (real GA4, Apr 1 - May 14) --------------
   formatPerformance: [
     { type: "Troubleshooting", avgSessions: 454, count: 7,  color: "#ef4444" },
     { type: "How-to",          avgSessions: 309, count: 20, color: "#3b82f6" },
     { type: "List / Best",     avgSessions: 203, count: 5,  color: "#10b981" },
     { type: "Guide / Other",   avgSessions: 190, count: 12, color: "#6b7280" },
   ],
-
-  // ---- AI insights ------------------------------------------------
-  aiInsights: {
-    generatedOn: "May 14, 2026",
-    headline: "Sessions recovered in April after a 3-month slide, and May is pacing ahead of April's daily rate.",
-    body: [
-      "Sessions dropped 33% Jan-Feb and another 26% Feb-Mar. April broke that slide with +0.8% vs March, and the first 14 days of May are averaging 1,036 sessions/day vs April's 721/day. If that holds, May could reach ~32,000 sessions. Worth watching weekly to see whether that pace continues or tapers.",
-      "The blog is generating real, trackable revenue: $1,018.10 from 11 transactions in the first 44 days of Q2. The highest-converting articles are not the highest-traffic ones. Mid-tier articles with strong commercial intent (40-100 sessions) are the quiet revenue drivers, so protecting them in rankings matters as much as protecting the big traffic articles.",
-      "Troubleshooting articles lead on sessions: the Instagram feed not loading fix and the followers growth article are the top 2 by a margin. They attract high-intent visitors with a specific problem. Any ranking dip on these two articles is the highest-risk scenario for the quarter.",
-      "Instagram topics dominate by volume. The top 6 articles by sessions are all Instagram-related. The Review Notification popup article (552 sessions) is a notable exception and suggests the product announcement format has genuine reach when the hook is strong.",
-    ],
-    recommendation: "Fill in the T1/2/3 log below with every article Sajjan has updated this quarter, even retroactively. That log is exactly what Joel asked for in the Q4 review. Also worth pulling April's revenue from GA4 to break out Apr vs May on the revenue side.",
-  },
 };
 </script>
 
-<!-- ============================================================
-     PAGE LAYOUT
-     ============================================================ -->
 <div class="max-w-5xl mx-auto px-4 py-10">
 
   <!-- Header -->
@@ -197,236 +206,282 @@ const DATA = {
     <div class="flex items-start justify-between flex-wrap gap-4">
       <div>
         <p class="text-xs font-semibold uppercase tracking-widest text-blue-600 mb-1" id="brand-label"></p>
-        <h1 class="text-3xl font-bold text-gray-900">Blog Performance Dashboard</h1>
+        <h1 class="text-3xl font-bold text-gray-900">Content Dashboard</h1>
         <p class="mt-1 text-gray-500 text-sm" id="period-label"></p>
       </div>
       <div class="text-right text-xs text-gray-400 space-y-0.5">
         <div id="owner-label"></div>
         <div id="updated-label"></div>
-        <div class="text-blue-400 font-medium">Sessions: live GA4 data</div>
+        <div class="text-blue-400 font-medium">Blog sessions: live GA4 data</div>
       </div>
     </div>
   </div>
 
-  <!-- Monthly sessions trend (PRIMARY section) -->
-  <div class="bg-white rounded-xl border border-gray-200 p-6 mb-6 shadow-sm">
-    <div class="flex items-center justify-between mb-5">
-      <div>
-        <p class="text-xs font-semibold uppercase tracking-widest text-gray-400">Monthly Sessions Trend</p>
-        <p class="text-xs text-gray-400 mt-0.5">Q2 2026 · Blog Posts segment, landing page sessions</p>
+  <!-- Nav tabs -->
+  <div class="flex gap-2 flex-wrap mb-8 border-b border-gray-200 pb-0">
+    <button onclick="showTab('blog')"    id="tab-blog"     class="tab-btn px-4 py-2 text-sm font-medium rounded-t-lg border-b-2 border-blue-500 text-blue-600 bg-white">Blog</button>
+    <button onclick="showTab('email')"   id="tab-email"   class="tab-btn px-4 py-2 text-sm font-medium rounded-t-lg border-b-2 border-transparent text-gray-500 hover:text-gray-700">Emails</button>
+    <button onclick="showTab('optim')"   id="tab-optim"   class="tab-btn px-4 py-2 text-sm font-medium rounded-t-lg border-b-2 border-transparent text-gray-500 hover:text-gray-700">Optimizations</button>
+    <button onclick="showTab('team')"    id="tab-team"    class="tab-btn px-4 py-2 text-sm font-medium rounded-t-lg border-b-2 border-transparent text-gray-500 hover:text-gray-700">Team</button>
+    <button onclick="showTab('proposals')" id="tab-proposals" class="tab-btn px-4 py-2 text-sm font-medium rounded-t-lg border-b-2 border-transparent text-gray-500 hover:text-gray-700">Proposals</button>
+  </div>
+
+  <!-- ===================== BLOG TAB ===================== -->
+  <div id="section-blog">
+
+    <!-- Monthly trend -->
+    <div class="bg-white rounded-xl border border-gray-200 p-6 mb-6 shadow-sm">
+      <div class="flex items-center justify-between mb-5">
+        <div>
+          <p class="text-xs font-semibold uppercase tracking-widest text-gray-400">Monthly Sessions</p>
+          <p class="text-xs text-gray-400 mt-0.5">Q2 2026 · Blog Posts segment, landing page sessions</p>
+        </div>
+        <span class="text-xs bg-green-100 text-green-700 font-semibold px-2 py-0.5 rounded-full">Live GA4</span>
       </div>
-      <span class="text-xs bg-green-100 text-green-700 font-semibold px-2 py-0.5 rounded-full">Live GA4 data</span>
+      <div id="trend-chart"></div>
     </div>
-    <div id="trend-chart"></div>
-  </div>
 
-  <!-- Q2 detail cards (April / May / June expandable) -->
-  <div class="mb-6">
-    <div class="flex items-center justify-between mb-3">
-      <p class="text-xs font-semibold uppercase tracking-widest text-gray-400">Q2 Monthly Detail</p>
-      <span class="text-xs bg-green-100 text-green-700 font-semibold px-2 py-0.5 rounded-full">Top articles: real GA4 data</span>
+    <!-- Q2 monthly detail -->
+    <div class="mb-6">
+      <p class="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-3">Monthly Detail</p>
+      <div class="space-y-3" id="months-container"></div>
     </div>
-    <div class="space-y-3" id="months-container"></div>
-  </div>
 
-  <!-- Q2 summary metrics -->
-  <div class="bg-white rounded-xl border border-gray-200 p-5 mb-6 shadow-sm">
-    <p class="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-4">Q2 2026 To Date (Apr 1 - May 14)</p>
-    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4" id="summary-cards"></div>
-  </div>
+    <!-- Q2 summary cards -->
+    <div class="bg-white rounded-xl border border-gray-200 p-5 mb-6 shadow-sm">
+      <p class="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-4">Q2 To Date (Apr 1 - May 14)</p>
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4" id="summary-cards"></div>
+    </div>
 
-  <!-- Format performance -->
-  <div class="bg-white rounded-xl border border-gray-200 p-5 mb-6 shadow-sm">
-    <div class="flex items-center justify-between mb-4">
-      <div>
-        <p class="text-xs font-semibold uppercase tracking-widest text-gray-400">Format Type Performance</p>
-        <p class="text-xs text-gray-400 mt-0.5">Average sessions per article type, Apr 1 - May 14</p>
+    <!-- Format performance -->
+    <div class="bg-white rounded-xl border border-gray-200 p-5 mb-6 shadow-sm">
+      <div class="flex items-center justify-between mb-4">
+        <div>
+          <p class="text-xs font-semibold uppercase tracking-widest text-gray-400">Format Performance</p>
+          <p class="text-xs text-gray-400 mt-0.5">Avg sessions per article type, Apr 1 - May 14</p>
+        </div>
+        <span class="text-xs bg-green-100 text-green-700 font-semibold px-2 py-0.5 rounded-full">Live GA4</span>
       </div>
-      <span class="text-xs bg-green-100 text-green-700 font-semibold px-2 py-0.5 rounded-full">Live GA4 data</span>
+      <div id="format-bars"></div>
     </div>
-    <div id="format-bars"></div>
-  </div>
 
-  <!-- All articles table -->
-  <div class="bg-white rounded-xl border border-gray-200 p-5 mb-6 shadow-sm">
-    <div class="flex items-center justify-between mb-4">
-      <div>
-        <p class="text-xs font-semibold uppercase tracking-widest text-gray-400">All Blog Articles - Ranked by Sessions</p>
-        <p class="text-xs text-gray-400 mt-0.5">Apr 1 - May 14, 2026</p>
+    <!-- All articles -->
+    <div class="bg-white rounded-xl border border-gray-200 p-5 mb-6 shadow-sm">
+      <div class="flex items-center justify-between mb-4">
+        <div>
+          <p class="text-xs font-semibold uppercase tracking-widest text-gray-400">All Articles Ranked</p>
+          <p class="text-xs text-gray-400 mt-0.5">Apr 1 - May 14, 2026</p>
+        </div>
+        <span class="text-xs bg-green-100 text-green-700 font-semibold px-2 py-0.5 rounded-full">Live GA4</span>
       </div>
-      <span class="text-xs bg-green-100 text-green-700 font-semibold px-2 py-0.5 rounded-full">Live GA4 data</span>
-    </div>
-    <div class="overflow-x-auto">
-      <table class="w-full text-sm">
-        <thead>
-          <tr class="border-b border-gray-100">
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead><tr class="border-b border-gray-100">
             <th class="text-left pb-2 pr-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">#</th>
             <th class="text-left pb-2 pr-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">Article</th>
             <th class="text-right pb-2 pr-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">Sessions</th>
             <th class="text-left pb-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">Type</th>
-          </tr>
-        </thead>
-        <tbody id="articles-tbody"></tbody>
-      </table>
-    </div>
-  </div>
-
-  <!-- T1/2/3 log -->
-  <div class="bg-white rounded-xl border border-gray-200 p-5 mb-6 shadow-sm">
-    <div class="flex items-center justify-between mb-4">
-      <div>
-        <p class="text-xs font-semibold uppercase tracking-widest text-gray-400">T1/2/3 Update Log</p>
-        <p class="text-xs text-gray-400 mt-1">Track every article update here: what, who, when, and the session delta. This is what Joel asked for in Q4.</p>
+          </tr></thead>
+          <tbody id="articles-tbody"></tbody>
+        </table>
       </div>
-      <span class="text-xs bg-amber-100 text-amber-700 font-semibold px-2 py-0.5 rounded-full">Fill in manually</span>
     </div>
-    <div id="t123-content"></div>
+
   </div>
 
-  <!-- AI Insights -->
-  <div class="bg-blue-50 border border-blue-200 rounded-xl p-6 mb-10">
-    <div class="flex items-center gap-2 mb-4">
-      <svg class="w-4 h-4 text-blue-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd"/></svg>
-      <p class="text-xs font-semibold uppercase tracking-widest text-blue-600">AI Analysis</p>
-      <span class="text-xs text-blue-400" id="ai-date"></span>
+  <!-- ===================== EMAIL TAB ===================== -->
+  <div id="section-email" style="display:none">
+
+    <div class="bg-white rounded-xl border border-gray-200 p-5 mb-6 shadow-sm">
+      <div class="flex items-center justify-between mb-2">
+        <div>
+          <p class="text-xs font-semibold uppercase tracking-widest text-gray-400">Email Campaigns</p>
+          <p class="text-xs text-gray-400 mt-0.5">Fill in from Lindris after each send. CTR trend is a Q2 KPI.</p>
+        </div>
+        <span class="text-xs bg-amber-100 text-amber-700 font-semibold px-2 py-0.5 rounded-full">Fill in manually</span>
+      </div>
+
+      <!-- CTR trend bar if data exists -->
+      <div id="ctr-trend" class="mt-4"></div>
+
+      <!-- Campaign table -->
+      <div id="email-content" class="mt-4"></div>
     </div>
-    <p class="text-base font-semibold text-blue-900 mb-4" id="ai-headline"></p>
-    <div class="space-y-3 text-sm text-blue-800 leading-relaxed" id="ai-body"></div>
-    <div class="mt-4 pt-4 border-t border-blue-200">
-      <p class="text-xs font-semibold text-blue-600 uppercase tracking-wider mb-1">Recommendation</p>
-      <p class="text-sm text-blue-900 font-medium" id="ai-recommendation"></p>
-    </div>
+
   </div>
 
-  <p class="text-center text-xs text-gray-400">Smash Balloon Content Team &bull; <span id="footer-period"></span></p>
+  <!-- ===================== OPTIMIZATIONS TAB ===================== -->
+  <div id="section-optim" style="display:none">
+
+    <!-- T1/2/3 log -->
+    <div class="bg-white rounded-xl border border-gray-200 p-5 mb-6 shadow-sm">
+      <div class="flex items-center justify-between mb-2">
+        <div>
+          <p class="text-xs font-semibold uppercase tracking-widest text-gray-400">T1/2/3 Update Log</p>
+          <p class="text-xs text-gray-400 mt-0.5">Add a row every time an article is updated. This is the tracking Joel asked for in Q4.</p>
+        </div>
+        <span class="text-xs bg-amber-100 text-amber-700 font-semibold px-2 py-0.5 rounded-full">Fill in manually</span>
+      </div>
+      <div id="t123-content" class="mt-4"></div>
+    </div>
+
+    <!-- Experiments -->
+    <div class="bg-white rounded-xl border border-gray-200 p-5 mb-6 shadow-sm">
+      <div class="flex items-center justify-between mb-2">
+        <div>
+          <p class="text-xs font-semibold uppercase tracking-widest text-gray-400">Experiments</p>
+          <p class="text-xs text-gray-400 mt-0.5">Each test you run with a hypothesis and result. Covers the leadership KPI.</p>
+        </div>
+        <span class="text-xs bg-amber-100 text-amber-700 font-semibold px-2 py-0.5 rounded-full">Fill in manually</span>
+      </div>
+      <div id="experiments-content" class="mt-4"></div>
+    </div>
+
+  </div>
+
+  <!-- ===================== TEAM TAB ===================== -->
+  <div id="section-team" style="display:none">
+
+    <div class="bg-white rounded-xl border border-gray-200 p-5 mb-6 shadow-sm">
+      <div class="flex items-center justify-between mb-4">
+        <div>
+          <p class="text-xs font-semibold uppercase tracking-widest text-gray-400">Sajjan Output Tracker</p>
+          <p class="text-xs text-gray-400 mt-0.5">Track against Q2 targets. Covers the delegation KPI.</p>
+        </div>
+        <span class="text-xs bg-amber-100 text-amber-700 font-semibold px-2 py-0.5 rounded-full">Fill in manually</span>
+      </div>
+      <div id="sajjan-content"></div>
+    </div>
+
+  </div>
+
+  <!-- ===================== PROPOSALS TAB ===================== -->
+  <div id="section-proposals" style="display:none">
+
+    <div class="bg-white rounded-xl border border-gray-200 p-5 mb-6 shadow-sm">
+      <div class="flex items-center justify-between mb-2">
+        <div>
+          <p class="text-xs font-semibold uppercase tracking-widest text-gray-400">Growth Proposals</p>
+          <p class="text-xs text-gray-400 mt-0.5">Counts toward the "2+ proposals without being asked" leadership KPI.</p>
+        </div>
+        <span class="text-xs bg-amber-100 text-amber-700 font-semibold px-2 py-0.5 rounded-full">Fill in manually</span>
+      </div>
+      <div id="proposals-content" class="mt-4"></div>
+    </div>
+
+  </div>
+
+  <p class="text-center text-xs text-gray-400 mt-8">Smash Balloon Content Team &bull; <span id="footer-period"></span></p>
 </div>
 
-<!-- ============================================================
-     RENDER SCRIPT
-     ============================================================ -->
 <script>
+// ---- Helpers ----
 function fmt(n) {
   if (n === null || n === undefined) return '—';
   return typeof n === 'number' ? n.toLocaleString() : n;
 }
+function pct(n) {
+  if (n === null || n === undefined) return '—';
+  return n.toFixed(2) + '%';
+}
+function emptyState(msg, code) {
+  return `<div class="border-2 border-dashed border-gray-200 rounded-lg p-6 text-center">
+    <p class="text-sm text-gray-500 mb-2">${msg}</p>
+    ${code ? `<p class="text-xs text-gray-400 mt-1">Example: <code class="bg-gray-100 px-2 py-0.5 rounded text-xs">${code}</code></p>` : ''}
+  </div>`;
+}
 
-// Header
+// ---- Header ----
 document.getElementById('brand-label').textContent = DATA.brand;
 document.getElementById('period-label').textContent = DATA.period;
 document.getElementById('owner-label').textContent = 'Owner: ' + DATA.owner;
 document.getElementById('updated-label').textContent = 'Last updated: ' + DATA.lastUpdated;
 document.getElementById('footer-period').textContent = DATA.period;
 
-// ---- Monthly trend chart ----------------------------------------
+// ---- Tab switching ----
+function showTab(name) {
+  ['blog','email','optim','team','proposals'].forEach(t => {
+    document.getElementById('section-' + t).style.display = t === name ? 'block' : 'none';
+    const btn = document.getElementById('tab-' + t);
+    if (t === name) {
+      btn.classList.add('border-blue-500','text-blue-600','bg-white');
+      btn.classList.remove('border-transparent','text-gray-500');
+    } else {
+      btn.classList.remove('border-blue-500','text-blue-600','bg-white');
+      btn.classList.add('border-transparent','text-gray-500');
+    }
+  });
+}
+
+// ---- Monthly trend ----
 const trendEl = document.getElementById('trend-chart');
 const validSessions = DATA.monthlyTrend.filter(m => m.sessions !== null).map(m => m.sessions);
-const maxSessions = Math.max(...validSessions);
-
+const maxSessions = validSessions.length ? Math.max(...validSessions) : 1;
 DATA.monthlyTrend.forEach((m, idx) => {
-  const pct = m.sessions !== null ? Math.round((m.sessions / maxSessions) * 100) : 0;
-  const barColor = m.sessions === null ? '#e5e7eb' : '#3b82f6';
-
-  // MoM vs previous month
+  const pctWidth = m.sessions !== null ? Math.round((m.sessions / maxSessions) * 100) : 0;
   let momBadge = '';
-  if (idx > 0 && DATA.monthlyTrend[idx - 1].sessions !== null && m.sessions !== null) {
-    const prev = DATA.monthlyTrend[idx - 1].sessions;
-    const momPct = Math.round(((m.sessions - prev) / prev) * 100 * 10) / 10;
-    const positive = momPct >= 0;
-    const sign = positive ? '+' : '';
-    momBadge = `<span class="ml-2 text-xs font-semibold px-1.5 py-0.5 rounded ${positive ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}">${sign}${momPct}% vs ${DATA.monthlyTrend[idx-1].month}</span>`;
+  if (idx > 0 && DATA.monthlyTrend[idx-1].sessions !== null && m.sessions !== null) {
+    const prev = DATA.monthlyTrend[idx-1].sessions;
+    const diff = Math.round(((m.sessions - prev) / prev) * 1000) / 10;
+    const pos = diff >= 0;
+    momBadge = `<span class="ml-2 text-xs font-semibold px-1.5 py-0.5 rounded ${pos ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}">${pos?'+':''}${diff}% vs ${DATA.monthlyTrend[idx-1].month}</span>`;
   }
-
   const sessionLabel = m.sessions !== null
     ? `<span class="text-sm font-semibold text-gray-900 tabular-nums">${m.sessions.toLocaleString()}</span>${momBadge}${m.partial ? '<span class="ml-2 text-xs text-amber-600 font-medium">partial month</span>' : ''}`
     : `<span class="text-sm text-gray-400">no data yet</span>`;
-
   trendEl.innerHTML += `
     <div class="flex items-center gap-3 mb-4">
       <div class="w-20 text-xs font-medium text-gray-600 text-right shrink-0">${m.month}</div>
-      <div class="flex-1 bg-gray-100 rounded-full h-6 relative overflow-hidden">
-        ${m.sessions !== null
-          ? `<div class="trend-bar h-6 rounded-full" style="width:${pct}%;background:${barColor}"></div>`
-          : `<div class="h-6 rounded-full bg-gray-100 border-2 border-dashed border-gray-200"></div>`}
+      <div class="flex-1 bg-gray-100 rounded-full h-6 overflow-hidden">
+        ${m.sessions !== null ? `<div class="trend-bar h-6 rounded-full bg-blue-500" style="width:${pctWidth}%"></div>` : `<div class="h-6 rounded-full border-2 border-dashed border-gray-200"></div>`}
       </div>
       <div class="w-64 text-xs text-gray-500 shrink-0 flex items-center flex-wrap gap-1">${sessionLabel}</div>
     </div>`;
 });
 
-// ---- Q2 monthly detail cards ------------------------------------
-const tierColors = { T1: 'bg-purple-100 text-purple-700', T2: 'bg-blue-100 text-blue-700', T3: 'bg-gray-100 text-gray-600' };
+// ---- Monthly detail ----
 const monthsEl = document.getElementById('months-container');
-
 DATA.months.forEach((m, idx) => {
   const id = 'month-' + idx;
-  const sessionText = m.sessions !== null
-    ? m.sessions.toLocaleString() + ' sessions' + (m.partial ? ' (partial)' : '')
-    : 'No data yet';
-
+  const sessionText = m.sessions !== null ? m.sessions.toLocaleString() + ' sessions' + (m.partial ? ' (partial)' : '') : 'No data yet';
   const statsText = [
     m.articlesPublished !== null ? m.articlesPublished + ' new articles' : null,
     m.t123Updates !== null ? m.t123Updates + ' T1/2/3 updates' : null,
-  ].filter(Boolean).join(' · ') || 'Fill in article counts manually';
-
+  ].filter(Boolean).join(' · ') || 'Fill in counts manually';
+  const partialChip = m.partial ? `<span class="badge bg-amber-100 text-amber-700 ml-2">In progress</span>` : (m.sessions === null ? `<span class="badge bg-gray-100 text-gray-500 ml-2">Not started</span>` : '');
   const topHTML = m.topArticles.length > 0
-    ? `<div class="mt-4">
-        <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Top Articles by Sessions${m.partial ? ' ('+m.partialNote+')' : ''}</p>
-        <table class="w-full text-sm">
-          <thead><tr class="border-b border-gray-100">
-            <th class="text-left pb-2 pr-4 text-xs text-gray-400 font-semibold uppercase tracking-wider">#</th>
-            <th class="text-left pb-2 pr-4 text-xs text-gray-400 font-semibold uppercase tracking-wider">Article</th>
-            <th class="text-right pb-2 text-xs text-gray-400 font-semibold uppercase tracking-wider">Sessions</th>
-          </tr></thead>
-          <tbody>
-            ${m.topArticles.map((a, i) => `<tr class="border-b border-gray-50"><td class="py-2 pr-4 text-xs text-gray-400 tabular-nums">${i+1}</td><td class="py-2 pr-4 text-gray-800">${a.title}</td><td class="py-2 text-right tabular-nums font-medium text-gray-900">${a.sessions.toLocaleString()}</td></tr>`).join('')}
-          </tbody>
-        </table>
-      </div>`
-    : `<p class="text-sm text-gray-400 mt-4 italic">${m.highlights || 'No data yet.'}</p>`;
-
-  const newHTML = m.newArticles && m.newArticles.length > 0
-    ? `<div class="mt-4">
-        <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">New Articles Published</p>
-        ${m.newArticles.map(a => `<div class="flex gap-3 py-2 border-b border-gray-50 last:border-0 text-sm"><span class="text-gray-400 w-10 shrink-0">${a.date}</span><span class="text-gray-800">${a.title}</span></div>`).join('')}
-      </div>` : '';
-
-  const revenueChip = m.revenue !== null
-    ? `<span class="text-xs bg-green-50 text-green-700 font-semibold px-2 py-0.5 rounded ml-2">$${m.revenue.toLocaleString('en-US', {minimumFractionDigits:2})} revenue</span>`
-    : '';
-
-  const partialChip = m.partial
-    ? `<span class="text-xs bg-amber-100 text-amber-700 font-semibold px-2 py-0.5 rounded ml-2">In progress</span>`
-    : (m.sessions === null ? `<span class="text-xs bg-gray-100 text-gray-500 font-semibold px-2 py-0.5 rounded ml-2">Not started</span>` : '');
-
+    ? `<div class="mt-4"><p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Top Articles${m.partial ? ' ('+m.partialNote+')' : ''}</p>
+        <table class="w-full text-sm"><thead><tr class="border-b border-gray-100">
+          <th class="text-left pb-2 pr-4 text-xs text-gray-400 font-semibold">#</th>
+          <th class="text-left pb-2 pr-4 text-xs text-gray-400 font-semibold">Article</th>
+          <th class="text-right pb-2 text-xs text-gray-400 font-semibold">Sessions</th>
+        </tr></thead><tbody>
+        ${m.topArticles.map((a,i) => `<tr class="border-b border-gray-50"><td class="py-2 pr-4 text-xs text-gray-400">${i+1}</td><td class="py-2 pr-4 text-gray-800">${a.title}</td><td class="py-2 text-right tabular-nums font-medium">${a.sessions.toLocaleString()}</td></tr>`).join('')}
+        </tbody></table></div>`
+    : `<p class="text-sm text-gray-400 mt-4 italic">No data yet. Fill in at end of month.</p>`;
   monthsEl.innerHTML += `
     <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
-      <button class="expand-btn w-full flex items-center justify-between px-5 py-4 text-left" onclick="toggleMonth('${id}')">
+      <button class="expand-btn w-full flex items-center justify-between px-5 py-4 text-left" onclick="toggleSection('${id}')">
         <div class="flex items-center gap-3 flex-wrap">
-          <span class="font-semibold text-gray-900">${m.name}</span>
-          ${partialChip}
-          ${revenueChip}
+          <span class="font-semibold text-gray-900">${m.name}</span>${partialChip}
           <span class="text-sm text-gray-500">${sessionText}</span>
           <span class="text-xs text-gray-400">${statsText}</span>
         </div>
-        <svg id="${id}-chev" class="chevron w-4 h-4 text-gray-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-        </svg>
+        <svg id="${id}-chev" class="chevron w-4 h-4 text-gray-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
       </button>
-      <div id="${id}" class="month-body px-5 pb-5 border-t border-gray-100">
-        ${topHTML}${newHTML}
-        ${m.topArticles.length > 0 && m.highlights ? `<div class="mt-4 bg-gray-50 rounded-lg p-3 text-sm text-gray-600 italic">${m.highlights}</div>` : ''}
-      </div>
+      <div id="${id}" class="month-body px-5 pb-5 border-t border-gray-100">${topHTML}</div>
     </div>`;
 });
 
-function toggleMonth(id) {
+function toggleSection(id) {
   document.getElementById(id).classList.toggle('open');
   document.getElementById(id + '-chev').classList.toggle('open');
 }
 
-// ---- Summary cards ----------------------------------------------
+// ---- Summary cards ----
 const cardDefs = [
   { label: 'Blog Sessions', value: fmt(DATA.summary.totalSessions), sub: 'Apr 1 - May 14', real: true },
-  { label: 'Blog Revenue', value: DATA.summary.organicRevenue ? '$' + DATA.summary.organicRevenue.toLocaleString('en-US', {minimumFractionDigits:2}) : '—', sub: DATA.summary.transactions + ' transactions', real: true },
+  { label: 'Blog Revenue', value: '$' + DATA.summary.organicRevenue.toLocaleString('en-US',{minimumFractionDigits:2}), sub: DATA.summary.transactions + ' transactions', real: true },
   { label: 'Articles Published', value: fmt(DATA.summary.articlesPublished), sub: 'new this quarter', real: false },
   { label: 'T1/2/3 Updates', value: fmt(DATA.summary.t123UpdatesMade), sub: 'articles refreshed', real: false },
 ];
@@ -434,61 +489,75 @@ const cardsEl = document.getElementById('summary-cards');
 cardDefs.forEach(c => {
   const border = c.real ? 'border-green-200' : 'border-gray-200';
   const badge = c.real ? '<span class="text-xs text-green-600 font-semibold">GA4</span>' : '<span class="text-xs text-amber-500 font-semibold">Fill in</span>';
-  cardsEl.innerHTML += `
-    <div class="bg-white rounded-xl border ${border} p-4 shadow-sm">
-      <div class="flex items-center justify-between mb-1">
-        <p class="text-xs text-gray-400">${c.label}</p>${badge}
-      </div>
-      <p class="text-2xl font-bold text-gray-900">${c.value}</p>
-      <p class="text-xs text-gray-400 mt-1">${c.sub}</p>
-    </div>`;
+  cardsEl.innerHTML += `<div class="rounded-xl border ${border} p-4"><div class="flex items-center justify-between mb-1"><p class="text-xs text-gray-400">${c.label}</p>${badge}</div><p class="text-2xl font-bold text-gray-900">${c.value}</p><p class="text-xs text-gray-400 mt-1">${c.sub}</p></div>`;
 });
 
-// ---- Format bars ------------------------------------------------
+// ---- Format bars ----
 const maxAvg = Math.max(...DATA.formatPerformance.map(f => f.avgSessions));
 const fmtEl = document.getElementById('format-bars');
 DATA.formatPerformance.forEach(f => {
-  const pct = Math.round((f.avgSessions / maxAvg) * 100);
-  fmtEl.innerHTML += `
-    <div class="flex items-center gap-3 mb-3">
-      <div class="w-32 text-xs text-gray-700 font-medium text-right shrink-0">${f.type}</div>
-      <div class="flex-1 bg-gray-100 rounded-full h-5">
-        <div class="h-5 rounded-full" style="width:${pct}%;background:${f.color}"></div>
-      </div>
-      <div class="text-sm font-semibold text-gray-800 w-20 shrink-0">${fmt(f.avgSessions)} avg</div>
-      <div class="text-xs text-gray-400 w-16 shrink-0">${f.count} articles</div>
-    </div>`;
+  const p = Math.round((f.avgSessions / maxAvg) * 100);
+  fmtEl.innerHTML += `<div class="flex items-center gap-3 mb-3">
+    <div class="w-32 text-xs text-gray-700 font-medium text-right shrink-0">${f.type}</div>
+    <div class="flex-1 bg-gray-100 rounded-full h-5"><div class="h-5 rounded-full" style="width:${p}%;background:${f.color}"></div></div>
+    <div class="text-sm font-semibold text-gray-800 w-20 shrink-0">${fmt(f.avgSessions)} avg</div>
+    <div class="text-xs text-gray-400 w-16 shrink-0">${f.count} articles</div>
+  </div>`;
 });
 
-// ---- Articles table ---------------------------------------------
-const typeColors = {
-  'how-to':         'bg-blue-100 text-blue-700',
-  'troubleshooting':'bg-red-100 text-red-700',
-  'list':           'bg-green-100 text-green-700',
-  'guide':          'bg-purple-100 text-purple-700',
-  'announcement':   'bg-yellow-100 text-yellow-700',
-};
+// ---- Articles table ----
+const typeColors = { 'how-to':'bg-blue-100 text-blue-700', 'troubleshooting':'bg-red-100 text-red-700', 'list':'bg-green-100 text-green-700', 'guide':'bg-purple-100 text-purple-700', 'announcement':'bg-yellow-100 text-yellow-700' };
 const tbody = document.getElementById('articles-tbody');
 DATA.topArticles.forEach((a, i) => {
-  const colorClass = typeColors[a.formatType] || 'bg-gray-100 text-gray-600';
-  tbody.innerHTML += `
-    <tr class="border-b border-gray-50 hover:bg-gray-50 transition-colors">
-      <td class="py-2.5 pr-4 text-xs text-gray-400 tabular-nums">${i + 1}</td>
-      <td class="py-2.5 pr-4 text-gray-800">${a.title}</td>
-      <td class="py-2.5 pr-4 text-right tabular-nums font-semibold text-gray-900">${fmt(a.sessions)}</td>
-      <td class="py-2.5"><span class="t123-badge ${colorClass}">${a.formatType}</span></td>
-    </tr>`;
+  const cc = typeColors[a.formatType] || 'bg-gray-100 text-gray-600';
+  tbody.innerHTML += `<tr class="border-b border-gray-50 hover:bg-gray-50"><td class="py-2.5 pr-4 text-xs text-gray-400 tabular-nums">${i+1}</td><td class="py-2.5 pr-4 text-gray-800">${a.title}</td><td class="py-2.5 pr-4 text-right tabular-nums font-semibold text-gray-900">${fmt(a.sessions)}</td><td class="py-2.5"><span class="badge ${cc}">${a.formatType}</span></td></tr>`;
 });
 
-// ---- T1/2/3 log -------------------------------------------------
+// ---- Emails ----
+const emailEl = document.getElementById('email-content');
+const ctrEl = document.getElementById('ctr-trend');
+if (DATA.emails.length === 0) {
+  emailEl.innerHTML = emptyState('No campaigns logged yet. Add a row after each Lindris send.', '{ date: "May 1", subject: "Subject line", segment: "All", recipients: 500000, openRate: 28.5, ctr: 0.12, revenue: 250 }');
+} else {
+  // CTR trend
+  const maxCtr = Math.max(...DATA.emails.map(e => e.ctr));
+  ctrEl.innerHTML = `<p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">CTR Trend</p>` +
+    DATA.emails.map(e => {
+      const p = Math.round((e.ctr / maxCtr) * 100);
+      return `<div class="flex items-center gap-3 mb-2">
+        <div class="w-24 text-xs text-gray-500 text-right shrink-0">${e.date}</div>
+        <div class="flex-1 bg-gray-100 rounded-full h-4"><div class="h-4 rounded-full bg-blue-400" style="width:${p}%"></div></div>
+        <div class="text-xs font-semibold text-gray-800 w-14 shrink-0">${e.ctr.toFixed(2)}%</div>
+      </div>`;
+    }).join('');
+
+  // Table
+  emailEl.innerHTML = `<div class="overflow-x-auto mt-4"><table class="w-full text-sm">
+    <thead><tr class="border-b border-gray-100">
+      <th class="text-left pb-2 pr-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">Date</th>
+      <th class="text-left pb-2 pr-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">Subject</th>
+      <th class="text-left pb-2 pr-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">Segment</th>
+      <th class="text-right pb-2 pr-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">Recipients</th>
+      <th class="text-right pb-2 pr-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">OR</th>
+      <th class="text-right pb-2 pr-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">CTR</th>
+      <th class="text-right pb-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">Revenue</th>
+    </tr></thead>
+    <tbody>${DATA.emails.map(e => `<tr class="border-b border-gray-50 hover:bg-gray-50">
+      <td class="py-2.5 pr-3 text-gray-500 text-xs">${e.date}</td>
+      <td class="py-2.5 pr-3 text-gray-800">${e.subject}</td>
+      <td class="py-2.5 pr-3 text-gray-500 text-xs">${e.segment}</td>
+      <td class="py-2.5 pr-3 text-right tabular-nums text-gray-700">${e.recipients.toLocaleString()}</td>
+      <td class="py-2.5 pr-3 text-right tabular-nums text-gray-700">${e.openRate.toFixed(1)}%</td>
+      <td class="py-2.5 pr-3 text-right tabular-nums font-semibold text-gray-900">${e.ctr.toFixed(2)}%</td>
+      <td class="py-2.5 text-right tabular-nums text-gray-700">${e.revenue ? '$'+e.revenue.toLocaleString('en-US',{minimumFractionDigits:2}) : '—'}</td>
+    </tr>`).join('')}</tbody></table></div>`;
+}
+
+// ---- T1/2/3 log ----
 const t123El = document.getElementById('t123-content');
+const tierColors = { T1:'bg-purple-100 text-purple-700', T2:'bg-blue-100 text-blue-700', T3:'bg-gray-100 text-gray-600' };
 if (DATA.t123Log.length === 0) {
-  t123El.innerHTML = `
-    <div class="border-2 border-dashed border-gray-200 rounded-lg p-6 text-center">
-      <p class="text-sm text-gray-500 mb-2">No entries yet. Add a row each time an article is updated.</p>
-      <p class="text-xs text-gray-400">Open index.html, find the t123Log array, and add rows like:<br>
-      <code class="bg-gray-100 px-2 py-0.5 rounded text-xs">{ article: "Title", tier: "T1", updatedBy: "Sajjan", date: "Apr 8", sessionsBefore: 980, sessionsAfter: 1118, delta: "+14%" }</code></p>
-    </div>`;
+  t123El.innerHTML = emptyState('No updates logged yet. Add a row each time Sajjan or you updates an article.', '{ article: "Title", tier: "T1", updatedBy: "Sajjan", date: "Apr 8", sessionsBefore: 980, sessionsAfter: 1118, delta: "+14%" }');
 } else {
   t123El.innerHTML = `<div class="overflow-x-auto"><table class="w-full text-sm">
     <thead><tr class="border-b border-gray-100">
@@ -501,25 +570,87 @@ if (DATA.t123Log.length === 0) {
       <th class="text-right py-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">Delta</th>
     </tr></thead>
     <tbody>${DATA.t123Log.map(r => {
-      const positive = r.delta && r.delta.startsWith('+');
+      const pos = r.delta && r.delta.startsWith('+');
       return `<tr class="border-b border-gray-50 hover:bg-gray-50">
         <td class="py-2.5 pr-4 text-gray-800">${r.article}</td>
-        <td class="py-2.5 pr-4"><span class="t123-badge ${tierColors[r.tier] || ''}">${r.tier}</span></td>
+        <td class="py-2.5 pr-4"><span class="badge ${tierColors[r.tier]||''}">${r.tier}</span></td>
         <td class="py-2.5 pr-4 text-gray-600">${r.updatedBy}</td>
         <td class="py-2.5 pr-4 text-gray-500">${r.date}</td>
         <td class="py-2.5 pr-4 text-right tabular-nums text-gray-700">${fmt(r.sessionsBefore)}</td>
         <td class="py-2.5 pr-4 text-right tabular-nums text-gray-700">${r.sessionsAfter !== null ? fmt(r.sessionsAfter) : '—'}</td>
-        <td class="py-2.5 text-right text-sm ${positive ? 'text-green-600 font-semibold' : 'text-gray-400'}">${r.delta || '—'}</td>
+        <td class="py-2.5 text-right text-sm ${pos ? 'text-green-600 font-semibold' : 'text-gray-400'}">${r.delta||'—'}</td>
       </tr>`;
     }).join('')}</tbody></table></div>`;
 }
 
-// ---- AI Insights ------------------------------------------------
-document.getElementById('ai-date').textContent = '- ' + DATA.aiInsights.generatedOn;
-document.getElementById('ai-headline').textContent = DATA.aiInsights.headline;
-document.getElementById('ai-recommendation').textContent = DATA.aiInsights.recommendation;
-const aiBodyEl = document.getElementById('ai-body');
-DATA.aiInsights.body.forEach(p => { aiBodyEl.innerHTML += `<p>${p}</p>`; });
+// ---- Experiments ----
+const expEl = document.getElementById('experiments-content');
+const statusColors = { planned:'bg-gray-100 text-gray-600', running:'bg-blue-100 text-blue-700', complete:'bg-green-100 text-green-700' };
+if (DATA.experiments.length === 0) {
+  expEl.innerHTML = emptyState('No experiments logged yet. Add one for each test you run.', '{ name: "Email CTR subject line test", hypothesis: "...", startDate: "May 1", status: "running", result: "" }');
+} else {
+  expEl.innerHTML = DATA.experiments.map(e => `
+    <div class="border border-gray-100 rounded-lg p-4 mb-3">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <p class="font-medium text-gray-900">${e.name}</p>
+          <p class="text-xs text-gray-500 mt-0.5">${e.startDate}${e.endDate ? ' - ' + e.endDate : ''}</p>
+          <p class="text-sm text-gray-600 mt-2"><span class="font-medium text-gray-700">Hypothesis:</span> ${e.hypothesis}</p>
+          ${e.result ? `<p class="text-sm mt-1"><span class="font-medium text-gray-700">Result:</span> <span class="text-green-700 font-semibold">${e.result}</span></p>` : ''}
+        </div>
+        <span class="badge ${statusColors[e.status]||'bg-gray-100 text-gray-600'} shrink-0">${e.status}</span>
+      </div>
+    </div>`).join('');
+}
+
+// ---- Sajjan ----
+const sajjanEl = document.getElementById('sajjan-content');
+const s = DATA.sajjan;
+const sajjanCards = [
+  { label: 'WPChat Articles', actual: s.actual.wpchatArticles, target: s.targets.wpchatArticles },
+  { label: 'T1/2/3 Updates', actual: s.actual.t123Updates, target: s.targets.t123Updates },
+];
+sajjanEl.innerHTML = `<div class="grid grid-cols-2 gap-4 mb-5">` +
+  sajjanCards.map(c => {
+    const hasData = c.actual !== null && c.target !== null;
+    const progress = hasData ? Math.min(Math.round((c.actual / c.target) * 100), 100) : 0;
+    return `<div class="border border-gray-100 rounded-lg p-4">
+      <p class="text-xs text-gray-400 font-semibold uppercase tracking-wider mb-2">${c.label}</p>
+      ${hasData ? `
+        <p class="text-2xl font-bold text-gray-900">${c.actual} <span class="text-sm text-gray-400 font-normal">/ ${c.target}</span></p>
+        <div class="mt-2 bg-gray-100 rounded-full h-2"><div class="h-2 rounded-full bg-blue-500" style="width:${progress}%"></div></div>
+        <p class="text-xs text-gray-400 mt-1">${progress}% of target</p>` :
+      `<p class="text-2xl font-bold text-gray-300">—</p><p class="text-xs text-amber-500 mt-1">Set targets in DATA.sajjan</p>`}
+    </div>`;
+  }).join('') + `</div>`;
+
+if (s.log.length > 0) {
+  sajjanEl.innerHTML += `<p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Weekly Log</p>` +
+    s.log.map(l => `<div class="flex gap-3 py-2 border-b border-gray-50 text-sm"><span class="text-gray-400 w-14 shrink-0">${l.week}</span><span class="text-gray-700">${l.output}</span></div>`).join('');
+} else {
+  sajjanEl.innerHTML += emptyState('Add Sajjan\'s weekly output here.', '{ week: "Apr 7", output: "Published: WPChat article. Updated: Instagram feed article." }');
+}
+
+// ---- Proposals ----
+const propEl = document.getElementById('proposals-content');
+const propColors = { pitched:'bg-gray-100 text-gray-600', approved:'bg-blue-100 text-blue-700', 'in progress':'bg-yellow-100 text-yellow-700', shipped:'bg-green-100 text-green-700', declined:'bg-red-100 text-red-700' };
+if (DATA.proposals.length === 0) {
+  propEl.innerHTML = emptyState('No proposals logged yet. Add one for each idea you bring to Joel without being asked.', '{ name: "Dog-fooding Reviews Feed", datePitched: "Apr 8", status: "pitched", outcome: "" }');
+} else {
+  propEl.innerHTML = `<div class="overflow-x-auto"><table class="w-full text-sm">
+    <thead><tr class="border-b border-gray-100">
+      <th class="text-left pb-2 pr-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">Proposal</th>
+      <th class="text-left pb-2 pr-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">Date Pitched</th>
+      <th class="text-left pb-2 pr-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">Status</th>
+      <th class="text-left pb-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">Outcome</th>
+    </tr></thead>
+    <tbody>${DATA.proposals.map(p => `<tr class="border-b border-gray-50 hover:bg-gray-50">
+      <td class="py-2.5 pr-4 text-gray-800 font-medium">${p.name}</td>
+      <td class="py-2.5 pr-4 text-gray-500 text-xs">${p.datePitched}</td>
+      <td class="py-2.5 pr-4"><span class="badge ${propColors[p.status]||'bg-gray-100 text-gray-600'}">${p.status}</span></td>
+      <td class="py-2.5 text-gray-600 text-xs">${p.outcome || '—'}</td>
+    </tr>`).join('')}</tbody></table></div>`;
+}
 </script>
 </body>
 </html>
